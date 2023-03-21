@@ -33,6 +33,4 @@ public class Order {
 
     @Column(name = "status")
     private String status;
-    //Todo: poinformować julkę o tym, że to jest LocalDateTime
-
 }
