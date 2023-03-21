@@ -13,6 +13,7 @@ import java.util.Date;
 @Getter
 @Setter
 @NoArgsConstructor
+
 public class Client {
     @Id
     @SequenceGenerator(name = "clients_id_seq", sequenceName = "clients_id_seq", allocationSize = 1)

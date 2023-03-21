@@ -19,7 +19,7 @@ public class Order {
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "clientID", referencedColumnName = "id")
     private Client client;
 
     @Column(name = "created_at")

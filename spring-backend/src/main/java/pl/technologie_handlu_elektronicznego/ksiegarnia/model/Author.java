@@ -1,7 +1,6 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.model;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,6 @@ import java.util.Set;
 @Getter
 @Setter
 @NoArgsConstructor
-@EqualsAndHashCode
 
 public class Author {
     @ManyToMany(mappedBy = "authors")

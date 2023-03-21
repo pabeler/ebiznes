@@ -1,11 +1,19 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.model;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.Set;
 
 @Entity
-@Table(name = "Authors")
+@Table(name = "Books")
+@Getter
+@Setter
+@NoArgsConstructor
+
 public class Book {
     @Id
     @SequenceGenerator(name = "books_id_seq", sequenceName = "books_id_seq", allocationSize = 1)
