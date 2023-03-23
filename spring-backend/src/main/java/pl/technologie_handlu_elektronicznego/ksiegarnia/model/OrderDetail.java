@@ -10,19 +10,21 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@IdClass(OrderDetailsId.class)
 public class OrderDetail {
 
-    @Id
+    @EmbeddedId
+    private OrderDetailsId id;
+
     @ManyToOne
-    @JoinColumn(name = "orderID", nullable = false)
+    @MapsId("orderID")
+    @JoinColumn(name = "orderID")
     private Order order;
 
-    @Id
     @ManyToOne
-    @JoinColumn(name = "bookID", nullable = false)
+    @MapsId("bookID")
+    @JoinColumn(name = "bookID")
     private Book book;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity")
     private Integer quantity;
 }

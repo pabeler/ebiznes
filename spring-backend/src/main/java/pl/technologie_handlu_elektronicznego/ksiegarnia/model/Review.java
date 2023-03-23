@@ -18,7 +18,8 @@ public class Review {
     @Column(name = "description")
     private String description;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    //tu tak samo bez kaksady, bo usuniemy review to nam wywali książke
+    @ManyToOne
     @JoinColumn(name = "bookID", referencedColumnName = "id")
     private Book book;
 }

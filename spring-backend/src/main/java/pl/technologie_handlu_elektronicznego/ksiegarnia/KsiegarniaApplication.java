@@ -6,26 +6,34 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Client;
-import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.ClientRepository;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.AuthorRepository;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.CategoryRepository;
 
 @SpringBootApplication
 @RestController
 @RequestMapping("api/v1/")
 public class KsiegarniaApplication {
 
-	private final ClientRepository clientRepository;
+	private final AuthorRepository authorRepository;
+	private final CategoryRepository categoryRepository;
 
-	KsiegarniaApplication(ClientRepository clientRepository){
-		this.clientRepository = clientRepository;
+	KsiegarniaApplication(AuthorRepository authorRepository, CategoryRepository categoryRepository){
+		this.authorRepository = authorRepository;
+		this.categoryRepository = categoryRepository;
 	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(KsiegarniaApplication.class, args);
 	}
 
-	@GetMapping("getCLients")
-	public Long getClients(){
-		return clientRepository.countAllClients();
+	@GetMapping("getAuthors")
+	public Long getAuthors(){
+		return authorRepository.countAllAuthors();
 	}
+	@GetMapping("getCategories")
+	public Long getCategories(){
+		return categoryRepository.countAllCategories();
+	}
+
 
 }

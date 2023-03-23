@@ -7,14 +7,14 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Author;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.AuthorRepository;
 
 public class AuthorController {
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    @Autowired
-    private AuthorRepository authorRepository;
-
-    @PostMapping("/author")
-    Author newAuthor(@RequestBody Author newAuthor){
-        return authorRepository.save(newAuthor);
-    }
+//    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+//    @Autowired
+//    private AuthorRepository authorRepository;
+//
+//    @PostMapping("/author")
+//    Author newAuthor(@RequestBody Author newAuthor){
+//        return authorRepository.save(newAuthor);
+//    }
 
 
 }

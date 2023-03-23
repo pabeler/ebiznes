@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "Orders")
@@ -33,4 +34,7 @@ public class Order {
 
     @Column(name = "status")
     private String status;
+
+    @OneToMany(mappedBy = "order")
+    private Set<OrderDetail> quantity;
 }
