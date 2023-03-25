@@ -30,10 +30,7 @@ public class KsiegarniaApplication {
 	public Long getAuthors(){
 		return authorRepository.countAllAuthors();
 	}
-	@GetMapping("getCategories")
-	public Long getCategories(){
-		return categoryRepository.countAllCategories();
-	}
+
 
 
 }

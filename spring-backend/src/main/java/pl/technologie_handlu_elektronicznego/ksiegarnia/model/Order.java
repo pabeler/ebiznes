@@ -9,32 +9,32 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
-@Table(name = "Orders")
+@Table(name = "`Orders`")
 @Getter
 @Setter
 @NoArgsConstructor
 public class Order {
     @Id
-    @SequenceGenerator(name = "orders_id_seq", sequenceName = "orders_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_id_seq")
+    @SequenceGenerator(name = "orders_sequence", sequenceName = "orders_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "orders_sequence")
     private Integer id;
 
     @ManyToOne
-    @JoinColumn(name = "clientID", referencedColumnName = "id")
+    @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
 
     @Column(name = "created_at")
-    private LocalDateTime createdAt;
+    private LocalDateTime created_at;
 
     @Column(name = "updated_at")
-    private LocalDateTime updatedAt;
+    private LocalDateTime updated_at;
 
     @Column(name = "destination_address")
-    private String destinationAddress;
+    private String destination_address;
 
     @Column(name = "status")
     private String status;
 
     @OneToMany(mappedBy = "order")
-    private Set<OrderDetail> quantity;
+    private Set<OrderDetail> items;
 }

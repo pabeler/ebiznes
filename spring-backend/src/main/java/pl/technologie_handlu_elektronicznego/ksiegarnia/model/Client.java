@@ -7,30 +7,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 
 @Entity
-@Table(name = "Clients")
+@Table(name = "`Clients`")
 @Getter
 @Setter
 @NoArgsConstructor
 
 public class Client {
     @Id
-    @SequenceGenerator(name = "clients_id_seq", sequenceName = "clients_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clients_id_seq")
+    @SequenceGenerator(name = "clients_sequence", sequenceName = "clients_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "clients_sequence")
     private Integer id;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "second_name")
-    private String secondName;
+    private String second_name;
 
     @Column(name = "birthday")
     private Date birthday;
 
     @Column(name = "phone_number")
-    private String phoneNumber;
+    private String phone_number;
 
     @Column(name = "address")
     private String address;
@@ -40,4 +41,7 @@ public class Client {
 
     @Column(name = "password")
     private String password;
+
+    @OneToMany
+    private List<Order> orders;
 }

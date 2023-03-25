@@ -1,7 +1,6 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.model;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,15 +8,15 @@ import lombok.Setter;
 import java.util.Set;
 
 @Entity
-@Table(name = "Books")
+@Table(name = "`Books`")
 @Getter
 @Setter
 @NoArgsConstructor
 
 public class Book {
     @Id
-    @SequenceGenerator(name = "books_id_seq", sequenceName = "books_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_id_seq")
+    @SequenceGenerator(name = "books_sequence", sequenceName = "books_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_sequence")
     private Integer id;
 
     @Column(name = "title")
@@ -29,21 +28,22 @@ public class Book {
     @OneToMany
     private Set<Review> reviews;
 
-    //Tu raczej bez kaskady, bo jeżeli usuniemy jakąś książke to nam pociągnie wszystko i usunie nam też kategorie z nią związaną
-    //jedna książka może mieć wiele kategorii
-    @OneToMany
+    @ManyToMany
+    @JoinTable(name = "`Books_Categories`",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
 
     @OneToOne
-    @JoinColumn(name = "publisherID", referencedColumnName = "id")
-    private Publisher publisher;
+    @JoinColumn(name = "publisher_id", referencedColumnName = "id")
+    private Publisher publishers;
 
 
     @Column(name = "image_url")
-    private String imageUrl;
+    private String image_url;
 
     @ManyToMany
-    @JoinTable(name = "Books_Authors",
+    @JoinTable(name = "`Books_Authors`",
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Author> authors;

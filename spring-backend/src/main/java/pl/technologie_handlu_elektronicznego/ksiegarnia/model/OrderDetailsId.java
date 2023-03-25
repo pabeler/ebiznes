@@ -15,8 +15,8 @@ import java.io.Serializable;
 @Setter
 @EqualsAndHashCode
 public class OrderDetailsId implements Serializable {
-    @Column(name = "orderID")
+    @Column(name = "order_id")
     private Integer orderID;
-    @Column(name = "bookID")
+    @Column(name = "book_id")
     private Integer bookID;
 }
