@@ -1,0 +1,20 @@
+.home .home-banner-1,
+.home .home-banner-2,
+.home .home-banner-3 {
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 90% center;
+    min-height: 650px;
+    position: relative;
+}
+
+.home .home-banner .home-banner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    /* tutaj sobie poedytować żeby nam pasowało do odpowiedniego rozmiaru */
+    transform: translate(-50%, -50%);
+    color: #fff;
+    text-align: center; 
+}

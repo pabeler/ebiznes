@@ -1,14 +1,27 @@
-.nav-item_text{
+.navbar-nav > .active > a {
     color: #2f3a3b;
+  }
+
+  .nav-item > a:hover {
+    color: #2f3a3b;
+  }  
+
+
+.nav-item_text{
     font-weight: 400;
     font-family: Poppins, sans-serif;
 }
-.nav-item_join{
-    color: #30cb70;
+.nav-item > .nav-item_join{
     font-weight: 600;
     font-family: Poppins, sans-serif;
+    border: solid 2px #FFFFFF;
+    border-radius: 6px;
 }
 
+.nav-item > .nav-item_join:hover {
+    color: #30cb70;
+    border-color: #30cb70;
+  }  
 
 .nav--logo {
     height: 60px;
