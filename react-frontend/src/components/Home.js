@@ -4,6 +4,8 @@ import "./Home.css";
 export default function Home() {
     return (
         <>
+        {/* ----------------------------- Nowości ----------------------------- */}
+
         <section id="home" className="home pt-1 overflow-hidden">
             <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="true">
                 <div className="carousel-indicators">
@@ -56,6 +58,8 @@ export default function Home() {
     </div>
 </section>
 
+{/* ----------------------------- BESTSELLERY ----------------------------- */}
+
 <div id="products" className="products">
     <div className="container-fluid">
         <div className="row">
@@ -72,7 +76,7 @@ export default function Home() {
                 <a href="http://localhost:3000/" className="d-block text-center mb-4">
                     <div className="product-list">
                         <div className="position-relative">
-                            <img src="images\Przedza.png" alt="product" className="img-fluid product-image-first"/>
+                            <img src="images\Przedza.png" alt="product" className="img-fluid product-image"/>
                         </div>
                         <div className="product-name pt-3">
                             <h3 className="text-capitalize">
@@ -88,11 +92,11 @@ export default function Home() {
                 <a href="http://localhost:3000/" className="d-block text-center mb-4">
                     <div className="product-list">
                         <div className="position-relative">
-                            <img src="images\JP2.png" alt="product" className="img-fluid product-image-first"/>
+                            <img src="images\JP2.png" alt="product" className="img-fluid product-image"/>
                         </div>
                         <div className="product-name pt-3">
                             <h3 className="text-capitalize">
-                                <b>Przędza. W poszukiwaniu wewnęrznej wolności.</b>
+                                <b>Maxima Culpa. Jan Paweł II wiedział</b>
                             </h3>
                             <p className="product-price mb-0">26,60zł</p>
                             <button type="button"className="product-button btn btn-outline-danger">Dodaj do koszyka</button>
@@ -104,11 +108,11 @@ export default function Home() {
                 <a href="http://localhost:3000/" className="d-block text-center mb-4">
                     <div className="product-list">
                         <div className="position-relative">
-                            <img src="images\Corka.png" alt="product" className="img-fluid product-image-first"/>
+                            <img src="images\Corka.png" alt="product" className="img-fluid product-image"/>
                         </div>
                         <div className="product-name pt-3">
                             <h3 className="text-capitalize">
-                                <b>Przędza. W poszukiwaniu wewnęrznej wolności.</b>
+                                <b>Córka z Włoch. Cykl Utracone córki. Tom1</b>
                             </h3>
                             <p className="product-price mb-0">26,60zł</p>
                             <button type="button"className="product-button btn btn-outline-danger">Dodaj do koszyka</button>
@@ -120,11 +124,11 @@ export default function Home() {
                 <a href="http://localhost:3000/" className="d-block text-center mb-4">
                     <div className="product-list">
                         <div className="position-relative">
-                            <img src="images\Rowni.png" alt="product" className="img-fluid product-image-first"/>
+                            <img src="images\Rowni.png" alt="product" className="img-fluid product-image"/>
                         </div>
                         <div className="product-name pt-3">
                             <h3 className="text-capitalize">
-                                <b>Przędza. W poszukiwaniu wewnęrznej wolności.</b>
+                                <b>Równi bogom</b>
                             </h3>
                             <p className="product-price mb-0">26,60zł</p>
                             <button type="button"className="product-button btn btn-outline-danger">Dodaj do koszyka</button>
@@ -135,6 +139,57 @@ export default function Home() {
         </div>
     </div>
 </div>
+
+
+{/* ----------------------------- DLACZEGO MY / INFO ----------------------------- */}
+<div id="info" className="info">
+    <div className="container-fluid">
+        <div className="row">
+            <div className="col-sm-12">
+                <div className="headline text-left info-text info-text-header bg-white pt-3 mb-5">
+                    <h2 className="pb-3 position-relative d-inline-block ">
+                        Dlaczego powinieneś wybrać nas?
+                    </h2>
+                </div>
+            </div>
+        </div>
+        <div className="row ms-5 me-5">
+            <div className="col-sm-12 col-md-6 col-lg-3 info-text">
+                <div className="info-text">
+                    <h3 className="pb-3 position-relative d-flex flex-column ps-5 pe-5">
+                        <img src="images\Delivery.png" alt="info1" className="img-fluid info-image"/>
+                        Darmowa dostawa od 199zł
+                    </h3>
+                </div>
+            </div>
+            <div className="col-sm-12 col-md-6 col-lg-3 info-text">
+                <div className="info-text">
+                    <h3 className="pb-3 position-relative d-flex flex-column ps-5 pe-5">
+                        <img src="images\Delivery.png" alt="info1" className="img-fluid info-image"/>
+                        Wiele korzystnych promocji
+                    </h3>
+                </div>
+            </div>
+            <div className="col-sm-12 col-md-6 col-lg-3 info-text">
+                <div className="info-text">
+                    <h3 className="pb-3 position-relative d-flex flex-column ps-5 pe-5">
+                        <img src="images\Delivery.png" alt="info1" className="img-fluid info-image"/>
+                        Bezpieczne zakupy
+                    </h3>
+                </div>
+            </div>
+            <div className="col-sm-12 col-md-6 col-lg-3 info-text">
+                <div className="info-text">
+                    <h3 className="pb-3 position-relative d-flex flex-column ps-5 pe-5">
+                        <img src="images\Delivery.png" alt="info1" className="img-fluid info-image"/>
+                        Szeroki wybór
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 </>
 )
 }

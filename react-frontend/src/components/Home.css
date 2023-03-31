@@ -45,6 +45,13 @@
 }
 
 /* product */
+
+.product-image{ 
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+
 .product-name{
     font-family: Poppins,sans-serif;
     font-weight: 700;
@@ -60,3 +67,13 @@
     color: rgba(255, 0,0,1);
 }
 
+.info-text{
+    font-family: Inter,sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: black;
+}
+
+.info-text-header{
+    font-size: 40px;
+}
