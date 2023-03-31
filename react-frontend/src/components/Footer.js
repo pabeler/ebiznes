@@ -4,7 +4,7 @@ import "./Footer.css";
 export default function Footer() {
     return (
         <div class="container-fluid footer-text">
-            <footer class="pt-5 pb-3">
+            <footer class="pt-5 pb-3 mt-5">
                 <div class="row">
                     <div class="col-md-5 offset-md-1 mb-3 text-start">
                         <form>
@@ -15,7 +15,7 @@ export default function Footer() {
                             <label for="newsletter1" class="visually-hidden">Twój email</label>
                             <input id="newsletter1" type="text" class="form-control" placeholder="TWÓJ E-MAIL"></input>
                         </div>
-                        <button class="btn btn-success" type="button">Dołącz</button>
+                        <button class="btn btn-success mt-3 px-auto" type="button">Dołącz</button>
                         </form>
                     </div>
                     
