@@ -32,3 +32,31 @@
     text-align: center; 
 }
 
+/* products */
+.products-header-text {
+    font-family: Poppins,sans-serif;
+    font-weight: 700;
+    font-size: 50px;
+    color: #2f327d; 
+}
+.products a{
+    text-decoration: none;
+    color: #2f327d;
+}
+
+/* product */
+.product-name{
+    font-family: Poppins,sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: rgba(57, 61, 74, 1);
+}
+
+
+.product-price{
+    font-family: Poppins,sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: rgba(255, 0,0,1);
+}
+
