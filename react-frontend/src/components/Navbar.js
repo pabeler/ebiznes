@@ -1,6 +1,7 @@
 import React from "react"
 import "./Navbar.css"
 import Basket from  "./Basket"
+import {Link} from "react-router-dom";
 
 export default function Navbar() {
     return (
@@ -37,23 +38,17 @@ export default function Navbar() {
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2">
                             <a className="nav-link" href="http://localhost:3000/">Serwisy</a>
                         </li>
-                        <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-                            <a className="nav-link" href="http://localhost:3000/">Zaloguj</a>
-                        </li>
                         <li className="nav-item mt-auto mb-auto me-2">
-                            <a className="nav-link nav-item_join" href="http://localhost:3000/">Dołącz</a>
+                            <Link to={"/login"} className="nav-link nav-item_join">Logowanie</Link>
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2">
                             <a className="nav-link" href="http://localhost:3000/">
                                 <Basket/>
                             </a>
                         </li>
-                    
                     </ul>
                 </div>
             </div>
-            
-            
         </nav>
     )
 }
