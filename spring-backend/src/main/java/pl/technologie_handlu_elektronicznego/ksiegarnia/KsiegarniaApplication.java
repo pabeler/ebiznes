@@ -30,7 +30,4 @@ public class KsiegarniaApplication {
 	public Long getAuthors(){
 		return authorRepository.countAllAuthors();
 	}
-
-
-
 }
