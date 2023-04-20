@@ -3,15 +3,10 @@ package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Client;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.ClientRepository;
 
-import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,14 +22,9 @@ public class ClientController {
     }
 
     @PostMapping("/add-client")
-    public ResponseEntity<?> addAuthor(Client clientRequest) {
+    public ResponseEntity<?> addAuthor(@RequestBody Client clientRequest) {
         //create new client
         Client client = new Client();
-        client.setName(" ");
-        client.setSecond_name(" ");
-        client.setBirthday(new Date(2000, 1, 1));
-        client.setAddress(" ");
-        client.setPhone_number(" ");
         client.setEmail(clientRequest.getEmail());
         client.setPassword(clientRequest.getPassword());
 
