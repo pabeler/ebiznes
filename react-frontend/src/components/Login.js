@@ -10,6 +10,7 @@ export default function Login() {
 
     const handleLogin = (event) => {
         event.preventDefault();
+
     };
 
     const handleForgotPassword = (event) => {
@@ -18,10 +19,24 @@ export default function Login() {
         setShowForgotPassword(true);
     };
 
-    const handleRegister = (event) => {
+    const handleRegister = async (event)=> {
         event.preventDefault();
         setShowLoginForm(false);
         setShowRegisterForm(true);
+        const response = await fetch('/api/v1/client/add-client', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ email, password })
+        });
+        if (response.ok) {
+            const user = await response.json();
+            console.log(`User ${user.username} has been registered`);
+        } else {
+            const error = await response.json();
+            console.error(error.message);
+        }
     };
 
     const handleResetPassword = (event) => {

@@ -3,14 +3,14 @@ import Navbar from './components/Navbar';
 import Home from './components/Home';
 import Footer from './components/Footer';
 import {
-    BrowserRouter as Router, Route, Routes
+    BrowserRouter, Route, Routes
 } from "react-router-dom";
 import Login from "./components/Login";
 
 function App() {
   return (
     <div className="App">
-        <Router>
+        <BrowserRouter>
             <Navbar/>
 
             <Routes>
@@ -19,7 +19,7 @@ function App() {
             </Routes>
 
             <Footer/>
-        </Router>
+        </BrowserRouter>
     </div>
   );
 }
