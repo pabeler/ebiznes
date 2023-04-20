@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
-import axios from 'axios';
+import $ from 'jquery';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -20,19 +20,21 @@ export default function Login() {
         setShowForgotPassword(true);
     };
 
-    const handleRegister = async (event)=> {
+    const handleRegister = (event)=> {
         event.preventDefault();
         setShowLoginForm(false);
         setShowRegisterForm(true);
-        try {
-
-            // const response = await axios.post('http://localhost:8080/api/v1/client/add-client', { email, password });
-            const response = await axios.post('http://localhost:8080/api/v1/client/add-client', { email: email, password: password });
-            console.log(response.data)
-            console.log(`User ${response.data.username} has been registered`);
-        } catch (error) {
-            console.error(error.message);
-        }
+        $.ajax({
+            url: 'http://localhost:8080/api/v1/client/add-client',
+            method: 'POST',
+            data: { email, password },
+            success: (response) => {
+                console.log(`User ${response.username} has been registered`);
+            },
+            error: (error) => {
+                console.error(error.responseText);
+            }
+        });
     };
 
     const handleResetPassword = (event) => {
