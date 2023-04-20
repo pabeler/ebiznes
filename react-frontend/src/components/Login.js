@@ -24,17 +24,6 @@ export default function Login() {
         event.preventDefault();
         setShowLoginForm(false);
         setShowRegisterForm(true);
-        $.ajax({
-            url: 'http://localhost:8080/api/v1/client/add-client',
-            method: 'POST',
-            data: { email, password },
-            success: (response) => {
-                console.log(`User ${response.username} has been registered`);
-            },
-            error: (error) => {
-                console.error(error.responseText);
-            }
-        });
     };
 
     const handleResetPassword = (event) => {
