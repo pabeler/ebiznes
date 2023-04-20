@@ -1,5 +1,6 @@
 import {useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
+import axios from 'axios';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -23,18 +24,10 @@ export default function Login() {
         event.preventDefault();
         setShowLoginForm(false);
         setShowRegisterForm(true);
-        const response = await fetch('/api/v1/client/add-client', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-        if (response.ok) {
-            const user = await response.json();
-            console.log(`User ${user.username} has been registered`);
-        } else {
-            const error = await response.json();
+        try {
+            const response = await axios.post('http://localhost:8080/api/v1/client/add-client', { email, password });
+            console.log(`User ${response.data.username} has been registered`);
+        } catch (error) {
             console.error(error.message);
         }
     };
