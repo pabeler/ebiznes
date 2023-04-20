@@ -19,7 +19,7 @@ public class AuthorController {
     private AuthorRepository authorRepository;
 
     @PostMapping("/add-author")
-    public ResponseEntity<?> addAuthor(@RequestBody Author authorRequest) {
+    public ResponseEntity<?> addClient(@RequestBody Author authorRequest) {
         //create new author
         Author author = new Author();
         author.setName(authorRequest.getName());
