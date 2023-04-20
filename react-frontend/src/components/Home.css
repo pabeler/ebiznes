@@ -1,0 +1,80 @@
+.home .home-banner-1,
+.home .home-banner-2,
+.home .home-banner-3 {
+    width: 100%;
+    height: 580px;
+    background-repeat: no-repeat;
+    background-position: 100% center;
+    background-size: 100% 100%;  
+    background-repeat: no-repeat;
+    
+    position: relative;
+}
+.home .home-banner-1 {
+    background-image: url("news_1_harry.jpg");
+}
+.home .home-banner-2 {
+    background-image: url("news_1_harry.jpg");
+}
+.home .home-banner-3 {
+    background-image: url("news_1_harry.jpg");
+}
+.home .home-banner .home-banner-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+
+    /* tutaj sobie poedytować żeby nam pasowało do odpowiedniego rozmiaru */
+    transform: translate(50%, -50%);
+    font-family: Inter,sans-serif;
+    font-weight: 400;
+    color: #000000;
+    text-align: center; 
+}
+
+/* products */
+.products-header-text {
+    font-family: Poppins,sans-serif;
+    font-weight: 700;
+    font-size: 50px;
+    color: #2f327d; 
+}
+.products a{
+    text-decoration: none;
+    color: #2f327d;
+}
+
+/* product */
+
+.product-image{ 
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+
+.product-name{
+    font-family: Poppins,sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: rgba(57, 61, 74, 1);
+}
+
+
+.product-price{
+    font-family: Poppins,sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: rgba(255, 0,0,1);
+}
+
+.info-text{
+    font-family: Inter,sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+    color: black;
+}
+
+.info-text-header{
+    font-size: 40px;
+
+}
