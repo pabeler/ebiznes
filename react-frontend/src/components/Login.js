@@ -25,7 +25,10 @@ export default function Login() {
         setShowLoginForm(false);
         setShowRegisterForm(true);
         try {
-            const response = await axios.post('http://localhost:8080/api/v1/client/add-client', { email, password });
+
+            // const response = await axios.post('http://localhost:8080/api/v1/client/add-client', { email, password });
+            const response = await axios.post('http://localhost:8080/api/v1/client/add-client', { email: email, password: password });
+            console.log(response.data)
             console.log(`User ${response.data.username} has been registered`);
         } catch (error) {
             console.error(error.message);

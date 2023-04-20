@@ -12,6 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/v1/client")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 public class ClientController {
     @Autowired
     ClientRepository clientRepository;
