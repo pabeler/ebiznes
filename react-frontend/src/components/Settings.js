@@ -1,6 +1,7 @@
+import "./Settings.css"
 function Settings() {
     return (
-      <div class="settings-block">
+      <div class="container settings-block">
 
       </div>
     );
