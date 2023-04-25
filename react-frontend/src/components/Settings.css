@@ -1,7 +1,6 @@
 .settings-block {
     background-color: #fff;
     padding: 30px;
-    max-width: 1500px;
     box-shadow: 0px 0px 1px #8c8686;
     -moz-box-shadow: 0px 0px 1px #8c8686;
     -webkit-box-shadow: 0px 0px 1px #8c8686;
@@ -9,5 +8,5 @@
     -ms-box-shadow: 0px 0px 1px #8c8686;
     -webkit-border-radius: 0;
     -moz-border-radius: 0;
-    border-radius: 0;
+    border-radius: 10px;
 }
