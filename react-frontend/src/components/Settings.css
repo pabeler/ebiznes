@@ -17,3 +17,10 @@
     padding-left: 20px;
     text-decoration: solid;
 }
+.avatar-settings
+{
+    padding-top: 20px;
+    height: 200px;
+    width: 200px;
+    margin-right: 15px;
+}
