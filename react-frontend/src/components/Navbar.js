@@ -1,7 +1,7 @@
 import React, { useContext } from "react"
 import "./Navbar.css"
 import Basket from  "./Basket"
-import Avatar from "./Avatar";
+import MyProfile from "./MyProfile";
 import {Link} from "react-router-dom";
 import {logContext} from '../App';
 
@@ -42,7 +42,7 @@ export default function Navbar() {
                             <a className="nav-link" href="http://localhost:3000/">Serwisy</a>
                         </li>
                         <li className="nav-item mt-auto mb-auto me-2">
-                            {log==="unlogged"? <Link to={"/login"} className="nav-link nav-item_join">Logowanie</Link>:<div><Avatar/></div>}
+                            {log==="unlogged"? <Link to={"/login"} className="nav-link nav-item_join">Logowanie</Link>:<div><MyProfile/></div>}
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2">
                             <a className="nav-link" href="http://localhost:3000/">
