@@ -1,5 +1,9 @@
 import {useState} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
+import axios from 'axios';
+import {toast, ToastContainer} from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import {showToastMessage} from "./ToastMessage";
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -11,45 +15,49 @@ export default function Login() {
     const handleLogin = (event) => {
         event.preventDefault();
 
+        setEmail('');
+        setPassword('');
     };
 
-    const handleForgotPassword = (event) => {
+    const handleResetPassword = (event) => {
+        event.preventDefault();
+
+        setEmail('');
+        setPassword('');
+    };
+
+    const handleRegistration = async (event) => {
+        event.preventDefault();
+        try {
+            await axios.post('http://localhost:8080/api/v1/client/add-client', { email, password });
+            showToastMessage('Rejestracja powiodła się', 'success');
+        } catch (error) {
+            console.error(error.message);
+            showToastMessage('Rejestracja nie powiodła się', 'error');
+        } finally {
+            setEmail('');
+            setPassword('');
+        }
+    };
+
+    const goToResetPassword = (event) => {
         event.preventDefault();
         setShowLoginForm(false);
         setShowForgotPassword(true);
     };
 
-    const handleRegister = async (event)=> {
+    const goToRegistration = (event)=> {
         event.preventDefault();
         setShowLoginForm(false);
         setShowRegisterForm(true);
-        const response = await fetch('/api/v1/client/add-client', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ email, password })
-        });
-        if (response.ok) {
-            const user = await response.json();
-            console.log(`User ${user.username} has been registered`);
-        } else {
-            const error = await response.json();
-            console.error(error.message);
-        }
     };
 
-    const handleResetPassword = (event) => {
-        event.preventDefault();
-        setShowForgotPassword(false);
-        setShowLoginForm(true);
-    };
-
-    const handleRegistration = (event) => {
+    const goToLogin = (event) => {
         event.preventDefault();
         setShowRegisterForm(false);
+        setShowForgotPassword(false);
         setShowLoginForm(true);
-    };
+    }
 
     return (
         <>
@@ -70,6 +78,7 @@ export default function Login() {
                                         <Form.Group controlId="formPassword">
                                             <Form.Label>Hasło</Form.Label>
                                             <Form.Control type="password" placeholder="********" value={password}
+                                                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
                                                           onChange={(e) => setPassword(e.target.value)}/>
                                         </Form.Group>
 
@@ -77,11 +86,11 @@ export default function Login() {
                                             Zaloguj
                                         </Button>
 
-                                        <Button variant="link" onClick={handleForgotPassword}>
+                                        <Button variant="link" onClick={goToResetPassword}>
                                             Zapomniałeś hasła?
                                         </Button>
 
-                                        <Button variant="link" onClick={handleRegister}>
+                                        <Button variant="link" onClick={goToRegistration}>
                                             Rejestracja
                                         </Button>
                                     </Form>
@@ -96,14 +105,15 @@ export default function Login() {
                                     <Form onSubmit={handleResetPassword}>
                                         <Form.Group controlId="formForgotEmail">
                                             <Form.Label>Adres e-mail</Form.Label>
-                                            <Form.Control type="email" placeholder="example@example.com"/>
+                                            <Form.Control type="email" placeholder="example@example.com" value={email}
+                                                          onChange={(e) => setEmail(e.target.value)}/>
                                         </Form.Group>
 
                                         <Button variant="primary" type="submit" className="w-100 mt-3">
                                             Resetuj hasło
                                         </Button>
 
-                                        <Button variant="link" onClick={handleResetPassword}>
+                                        <Button variant="link" onClick={goToLogin}>
                                             Powrót do logowania
                                         </Button>
                                     </Form>
@@ -118,16 +128,19 @@ export default function Login() {
                                     <Form onSubmit={handleRegistration}>
                                         <Form.Group controlId="formRegisterEmail">
                                             <Form.Label>Adres e-mail</Form.Label>
-                                            <Form.Control type="email" placeholder="example@example.com"/>
+                                            <Form.Control type="email" placeholder="example@example.com" value={email}
+                                                          onChange={(e) => setEmail(e.target.value)}/>
                                         </Form.Group>
                                         <Form.Group controlId="formRegisterPassword">
                                             <Form.Label>Hasło</Form.Label>
-                                            <Form.Control type="password" placeholder="********"/>
+                                            <Form.Control type="password" placeholder="********" value={password}
+                                                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
+                                                          onChange={(e) => setPassword(e.target.value)}/>
                                         </Form.Group>
                                         <Button variant="primary" type="submit" className="w-100 mt-3">
                                             Zarejestruj
                                         </Button>
-                                        <Button variant="link" onClick={handleRegistration}>
+                                        <Button variant="link" onClick={goToLogin}>
                                             Powrót do logowania
                                         </Button>
                                     </Form>
@@ -137,6 +150,7 @@ export default function Login() {
                     </div>
                 </div>
             </div>
+            <ToastContainer/>
         </>
     )
 }
