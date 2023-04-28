@@ -1,9 +1,12 @@
-import React from "react"
+import React, { useContext } from "react"
 import "./Navbar.css"
 import Basket from  "./Basket"
+import MyProfile from "./MyProfile";
 import {Link} from "react-router-dom";
+import {logContext} from '../App';
 
 export default function Navbar() {
+    const {log} = useContext(logContext);
     return (
         //Narazie jest xl, potem można zmienić że składa się kiedy jest mniejszy ekran
         <nav className="navbar navbar-expand-xl ">
@@ -39,7 +42,7 @@ export default function Navbar() {
                             <a className="nav-link" href="http://localhost:3000/">Serwisy</a>
                         </li>
                         <li className="nav-item mt-auto mb-auto me-2">
-                            <Link to={"/login"} className="nav-link nav-item_join">Logowanie</Link>
+                            {log==="unlogged"? <Link to={"/login"} className="nav-link nav-item_join">Logowanie</Link>:<div><MyProfile/></div>}
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2">
                             <a className="nav-link" href="http://localhost:3000/">

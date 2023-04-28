@@ -1,11 +1,13 @@
-import {useState} from 'react';
+import {useState,useContext} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
+import {logContext} from '../App';
 import axios from 'axios';
 import {toast, ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {showToastMessage} from "./ToastMessage";
 
 export default function Login() {
+    const {setLog} = useContext(logContext);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showForgotPassword, setShowForgotPassword] = useState(false);
@@ -82,7 +84,7 @@ export default function Login() {
                                                           onChange={(e) => setPassword(e.target.value)}/>
                                         </Form.Group>
 
-                                        <Button variant="primary" type="submit" className="w-100 mt-3 mb-3">
+                                        <Button variant="primary" type="submit" className="w-100 mt-3 mb-3" onClick={() => {setLog("logged")}}>
                                             Zaloguj
                                         </Button>
 
