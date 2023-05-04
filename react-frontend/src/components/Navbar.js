@@ -24,7 +24,7 @@ export default function Navbar() {
                             <a className="nav-link nav--menu_item" href="http://localhost:3000/">Strona Główna</a>
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2 ">
-                            <a className="nav-link" href="http://localhost:3000/">Sklep</a>
+                            <a className="nav-link" href="http://localhost:3000/shop">Sklep</a>
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2">
                             <a className="nav-link" href="http://localhost:3000/">O nas</a>

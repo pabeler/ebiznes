@@ -1,0 +1,51 @@
+.settings-block {
+    background-color: #fff;
+    box-shadow: 0px 0px 1px #8c8686;
+    -moz-box-shadow: 0px 0px 1px #8c8686;
+    -webkit-box-shadow: 0px 0px 1px #8c8686;
+    -o-box-shadow: 0px 0px 1px #8c8686;
+    -ms-box-shadow: 0px 0px 1px #8c8686;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 10px;
+}
+
+.w-100{
+    width: 100%!important;
+}
+
+.font-filter-block{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 30px;
+    line-height: 24px;
+    text-align: left;
+}
+
+.filter-block{
+    background-color: #30CB70;
+    margin: 0%!important;
+    padding: 0%!important;
+}
+
+.ml-custom{
+    margin-left: 2%;
+}
+
+#slider-div {
+    display: flex;
+    flex-direction: row;
+    margin-top: 30px;
+  }
+  
+  #slider-div>div {
+    margin: 8px;
+  }
+  
+  .slider-label {
+    position: absolute;
+    background-color: #eee;
+    padding: 4px;
+    font-size: 0.75rem;
+  }
