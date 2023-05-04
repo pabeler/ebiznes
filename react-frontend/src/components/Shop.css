@@ -33,6 +33,13 @@
     margin-left: 2%;
 }
 
+.no-margin{
+    margin: 0;
+}
+
+.mt-custom{
+    margin-top: 40%;
+}
 #slider-div {
     display: flex;
     flex-direction: row;
