@@ -1,7 +1,9 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Role;
@@ -23,7 +25,7 @@ public class AuthenticationService {
         var user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.CLIENT)
+                .role(Role.valueOf("CLIENT"))
                 .build();
         repository.save(user);
         var jwtToken = jwtService.GenerateToken(user);
@@ -33,10 +35,16 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
         var user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.CLIENT)
+                .role(Role.valueOf("CLIENT"))
                 .build();
         repository.save(user);
         var jwtToken = jwtService.GenerateToken(user);
