@@ -2,7 +2,7 @@ import {useState,useContext} from 'react';
 import {Form, Button, Card} from 'react-bootstrap';
 import {logContext} from '../App';
 import axios from 'axios';
-import {toast, ToastContainer} from 'react-toastify';
+import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {showToastMessage} from "./ToastMessage";
 
@@ -31,7 +31,7 @@ export default function Login() {
     const handleRegistration = async (event) => {
         event.preventDefault();
         try {
-            await axios.post('http://localhost:8080/api/v1/client/add-client', { email, password });
+            await axios.post('http://localhost:8080/api/v1/auth/register', { email, password });
             showToastMessage('Rejestracja powiodła się', 'success');
         } catch (error) {
             console.error(error.message);
