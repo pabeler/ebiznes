@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Client;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Role;
-import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.ClientRepository;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.model.User;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.UserRepository;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.AuthenticationRequest;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.AuthenticationResponse;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.JwtService;
@@ -14,16 +14,16 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.JwtServi
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
-    private final ClientRepository repository;
+    private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
     public AuthenticationResponse register(RegisterRequest request) {
-        var user = Client.builder()
+        var user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role(Role.CLIENT)
                 .build();
         repository.save(user);
         var jwtToken = jwtService.GenerateToken(user);
@@ -33,10 +33,10 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        var user = Client.builder()
+        var user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.USER)
+                .role(Role.CLIENT)
                 .build();
         repository.save(user);
         var jwtToken = jwtService.GenerateToken(user);

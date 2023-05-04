@@ -7,6 +7,4 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Author;
 public interface    AuthorRepository extends JpaRepository<Author,Integer> {
     @Query("SELECT COUNT(a) FROM Author a")
     Long countAllAuthors();
-
-
 }
