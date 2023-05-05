@@ -14,11 +14,18 @@ export default function Login() {
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [showLoginForm, setShowLoginForm] = useState(true);
 
-    const handleLogin = (event) => {
+    const handleLogin = async (event) => {
         event.preventDefault();
-
-        setEmail('');
-        setPassword('');
+        try {
+            await axios.post('http://localhost:8080/api/v1/auth/authenticate', {email, password});
+            showToastMessage('Witaj ' + email, 'success');
+        } catch (error) {
+            console.error(error.message);
+            showToastMessage('Nieprawidłowe dane logowania', 'error');
+        } finally {
+            setEmail('');
+            setPassword('');
+        }
     };
 
     const handleResetPassword = (event) => {
