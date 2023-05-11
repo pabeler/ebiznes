@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "`Order_Details`")
+@Table(name = "`order_details`")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,12 +16,12 @@ public class OrderDetail {
     private OrderDetailsId id;
 
     @ManyToOne
-    @MapsId("orderID")
+    @MapsId("orderid")
     @JoinColumn(name = "order_id")
     private Order order;
 
     @ManyToOne
-    @MapsId("bookID")
+    @MapsId("bookid")
     @JoinColumn(name = "book_id")
     private Book book;
 

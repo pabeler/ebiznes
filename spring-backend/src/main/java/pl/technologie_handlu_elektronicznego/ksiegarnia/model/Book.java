@@ -8,15 +8,15 @@ import lombok.Setter;
 import java.util.Set;
 
 @Entity
-@Table(name = "`Books`")
+@Table(name = "`books`")
 @Getter
 @Setter
 @NoArgsConstructor
 
 public class Book {
     @Id
-    @SequenceGenerator(name = "books_sequence", sequenceName = "books_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_sequence")
+    @SequenceGenerator(name = "books_id_seq", sequenceName = "books_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_id_seq")
     private Integer id;
 
     @Column(name = "title")
@@ -29,7 +29,7 @@ public class Book {
     private Set<Review> reviews;
 
     @ManyToMany
-    @JoinTable(name = "`Books_Categories`",
+    @JoinTable(name = "`books_categories`",
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id"))
     private Set<Category> categories;
@@ -43,7 +43,7 @@ public class Book {
     private String image_url;
 
     @ManyToMany
-    @JoinTable(name = "`Books_Authors`",
+    @JoinTable(name = "`books_authors`",
             joinColumns = @JoinColumn(name = "id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private Set<Author> authors;

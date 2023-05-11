@@ -6,14 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "`Reviews`")
+@Table(name = "`reviews`")
 @NoArgsConstructor
 @Getter
 @Setter
 public class Review {
     @Id
-    @SequenceGenerator(name = "reviews_sequence", sequenceName = "reviews_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reviews_sequence")
+    @SequenceGenerator(name = "reviews_id_seq", sequenceName = "reviews_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "reviews_id_seq")
     private Integer id;
     @Column(name = "description")
     private String description;

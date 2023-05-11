@@ -24,22 +24,22 @@ export default function Navbar() {
                             <a className="nav-link nav--menu_item" href="http://localhost:3000/">Strona Główna</a>
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2 ">
-                            <a className="nav-link" href="http://localhost:3000/">Sklep</a>
+                            <a className="nav-link" href="http://localhost:3000/shop">Sklep</a>
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-                            <a className="nav-link" href="http://localhost:3000/">O nas</a>
+                            <a className="nav-link" href="http://localhost:3000/aboutus">O nas</a>
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-                            <a className="nav-link" href="http://localhost:3000/">Kontakt</a>
+                            <a className="nav-link" href="http://localhost:3000/contact">Kontakt</a>
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-                            <a className="nav-link" href="http://localhost:3000/">Blogi</a>
+                            <a className="nav-link" href="http://localhost:3000/blogs">Blogi</a>
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-                            <a className="nav-link" href="http://localhost:3000/">Kategorie</a>
+                            <a className="nav-link" href="http://localhost:3000/categories">Kategorie</a>
                         </li>
                         <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-                            <a className="nav-link" href="http://localhost:3000/">Serwisy</a>
+                            <a className="nav-link" href="http://localhost:3000/services">Serwisy</a>
                         </li>
                         <li className="nav-item mt-auto mb-auto me-2">
                             {log==="unlogged"? <Link to={"/login"} className="nav-link nav-item_join">Logowanie</Link>:<div><MyProfile/></div>}
