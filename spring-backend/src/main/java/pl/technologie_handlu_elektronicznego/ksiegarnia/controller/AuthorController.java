@@ -2,13 +2,10 @@ package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.relational.core.sql.In;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Author;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.AuthorRepository;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/author")

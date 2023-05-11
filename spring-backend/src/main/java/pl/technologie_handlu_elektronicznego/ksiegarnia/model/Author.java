@@ -8,7 +8,7 @@ import lombok.Setter;
 import java.util.Set;
 
 @Entity
-@Table(name = "`Authors`")
+@Table(name = "`authors`")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,8 +19,8 @@ public class Author {
     Set<Book> books;
 
     @Id
-    @SequenceGenerator(name = "authors_sequence", sequenceName = "authors_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authors_sequence")
+    @SequenceGenerator(name = "authors_id_seq", sequenceName = "authors_id_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authors_id_seq")
     private Integer id;
 
     @Column(name = "name")
