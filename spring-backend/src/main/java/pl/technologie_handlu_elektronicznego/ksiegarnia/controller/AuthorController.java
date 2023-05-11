@@ -8,7 +8,7 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Author;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.AuthorRepository;
 
 @RestController
-@RequestMapping("api/v1/author")
+@RequestMapping("/api/v1/author")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 

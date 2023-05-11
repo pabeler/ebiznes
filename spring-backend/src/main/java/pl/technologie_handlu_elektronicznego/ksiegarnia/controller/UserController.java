@@ -10,7 +10,7 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.UserRepositor
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/user")
+@RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class UserController {

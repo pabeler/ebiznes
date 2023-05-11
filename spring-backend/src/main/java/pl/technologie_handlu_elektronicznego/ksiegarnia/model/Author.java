@@ -19,8 +19,7 @@ public class Author {
     Set<Book> books;
 
     @Id
-    @SequenceGenerator(name = "authors_id_seq", sequenceName = "authors_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "authors_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "name")
@@ -30,7 +29,3 @@ public class Author {
     private String second_name;
 }
 
-//{
-//    "name": "Juliusz",
-//    "second_name": "Słowacki"
-//}

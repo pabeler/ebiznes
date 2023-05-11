@@ -1,5 +1,6 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,8 +16,7 @@ import java.util.Set;
 
 public class Book {
     @Id
-    @SequenceGenerator(name = "books_id_seq", sequenceName = "books_id_seq", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "books_id_seq")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Column(name = "title")
@@ -26,12 +26,13 @@ public class Book {
     private Float price;
 
     @OneToMany
+    @JsonIgnore
     private Set<Review> reviews;
 
     @ManyToMany
     @JoinTable(name = "`books_categories`",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
+            joinColumns = @JoinColumn(name = "bookid"),
+            inverseJoinColumns = @JoinColumn(name = "categoryid"))
     private Set<Category> categories;
 
     @OneToOne
@@ -44,11 +45,12 @@ public class Book {
 
     @ManyToMany
     @JoinTable(name = "`books_authors`",
-            joinColumns = @JoinColumn(name = "id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id"))
+            joinColumns = @JoinColumn(name = "bookid"),
+            inverseJoinColumns = @JoinColumn(name = "categoryid"))
     private Set<Author> authors;
 
     @OneToMany
-    private Set<OrderDetail> quantity;
+    @JsonIgnore
+    private Set<OrderDetail> orderDetails;
 
 }

@@ -16,13 +16,11 @@ public class OrderDetail {
     private OrderDetailsId id;
 
     @ManyToOne
-    @MapsId("orderid")
-    @JoinColumn(name = "order_id")
+    @JoinColumn(name = "orderid")
     private Order order;
 
     @ManyToOne
-    @MapsId("bookid")
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "bookid")
     private Book book;
 
     @Column(name = "quantity")
