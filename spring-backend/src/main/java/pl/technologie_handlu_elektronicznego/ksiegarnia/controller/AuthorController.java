@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Author;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.AuthorRepository;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/author")
 @RequiredArgsConstructor
@@ -61,7 +63,14 @@ public class AuthorController {
         return ResponseEntity.ok().build();
     }
 
+   /* @GetMapping("/get-authors")
+    public Long getAuthors(){
 
+    }*/
+   @GetMapping("/get-authors")
+   public List<Author> getAllEmployees() {
+       return authorRepository.findAll();
+   }
 }
 
 
