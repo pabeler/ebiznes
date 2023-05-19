@@ -1,10 +1,7 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,12 +12,7 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.UserRepositor
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.AuthenticationRequest;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.AuthenticationResponse;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.JwtService;
-import pl.technologie_handlu_elektronicznego.ksiegarnia.token.Token;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.token.TokenRepository;
-import pl.technologie_handlu_elektronicznego.ksiegarnia.token.TokenType;
-import lombok.extern.slf4j.Slf4j;
-
-import java.io.IOException;
 
 @Slf4j
 @Service
@@ -56,12 +48,13 @@ public class AuthenticationService {
         } catch (Exception e) {
             log.info(e.getMessage());
         }
-        log.info("Test");
+//        log.info("Test");
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .id(user.getId())
                 .build();
     }
 

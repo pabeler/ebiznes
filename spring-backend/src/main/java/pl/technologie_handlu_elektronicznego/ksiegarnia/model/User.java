@@ -15,7 +15,7 @@ import java.util.List;
 @Data
 @Builder
 @AllArgsConstructor
-@Table(name = "`users`")
+@Table(name = "`users`", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 @Getter
 @Setter
 @NoArgsConstructor

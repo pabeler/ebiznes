@@ -63,14 +63,10 @@ public class AuthorController {
         return ResponseEntity.ok().build();
     }
 
-   /* @GetMapping("/get-authors")
-    public Long getAuthors(){
-
-    }*/
-   @GetMapping("/get-authors")
-   public List<Author> getAllEmployees() {
-       return authorRepository.findAll();
-   }
+    @GetMapping("/get-authors")
+    public List<Author> getAllEmployees() {
+        return authorRepository.findAll();
+    }
 }
 
 
