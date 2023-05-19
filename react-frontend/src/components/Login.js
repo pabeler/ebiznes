@@ -5,6 +5,7 @@ import axios from 'axios';
 import {ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {showToastMessage} from "./ToastMessage";
+import { useNavigate } from 'react-router-dom';
 
 export default function Login() {
     const {setLog} = useContext(logContext);
@@ -13,12 +14,23 @@ export default function Login() {
     const [showForgotPassword, setShowForgotPassword] = useState(false);
     const [showRegisterForm, setShowRegisterForm] = useState(false);
     const [showLoginForm, setShowLoginForm] = useState(true);
+    const navigate = useNavigate();
 
     const handleLogin = async (event) => {
         event.preventDefault();
         try {
-            await axios.post('http://localhost:8080/api/v1/auth/authenticate', {email, password});
-            showToastMessage('Witaj ' + email, 'success');
+            await axios.post('http://localhost:8080/api/v1/auth/authenticate', {email, password})
+                .then((response) => {
+                localStorage.setItem('token', response.data.token);
+                localStorage.setItem('id', response.data.id);
+                console.log(response.data);
+                setLog("logged");
+                navigate('/settings');
+                showToastMessage('Witaj ' + email, 'success');
+            }).catch((error) => {
+                console.error(error.message);
+                showToastMessage('Nieprawidłowe dane logowania', 'error');
+            });
         } catch (error) {
             console.error(error.message);
             showToastMessage('Nieprawidłowe dane logowania', 'error');
@@ -91,7 +103,7 @@ export default function Login() {
                                                           onChange={(e) => setPassword(e.target.value)}/>
                                         </Form.Group>
 
-                                        <Button variant="primary" type="submit" className="w-100 mt-3 mb-3" onClick={() => {setLog("logged")}}>
+                                        <Button variant="primary" type="submit" className="w-100 mt-3 mb-3">
                                             Zaloguj
                                         </Button>
 

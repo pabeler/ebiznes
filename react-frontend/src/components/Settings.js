@@ -2,6 +2,8 @@ import "./Settings.css"
 import {Button, Card, Form} from "react-bootstrap";
 import {ToastContainer} from "react-toastify";
 import {useState} from "react";
+import axios from "axios";
+import {showToastMessage} from "./ToastMessage";
 
 function Settings() {
     const [email, setEmail] = useState('');
@@ -23,28 +25,62 @@ function Settings() {
     const [showAddressDetails, setShowAddressDetails] = useState(false);
     const [showChangeCredentials, setShowChangeCredentials] = useState(false);
 
-    const handleChangeCredentials = (event) => {
+    const handleChangeCredentials = async (event) => {
         event.preventDefault();
-        setEmail('');
-        setPassword('');
+        try {
+            const token = localStorage.getItem('token');
+            console.log(token);
+            await axios.post('http://localhost:8080/api/v1/user/change-password/1',
+                {email, password});
+            showToastMessage('Dane logowania zostały zaktualizowane', 'success');
+        } catch (error) {
+            console.error(error.message);
+            showToastMessage('Dane logowania nie zostały zaktualizowane', 'error');
+        } finally {
+            setEmail('');
+            setPassword('');
+        }
     };
 
-    const handleAccountDetails = (event) => {
+    const handleAccountDetails = async (event) => {
         event.preventDefault();
-        setName('')
-        setSecondName('')
-        setBirthDate('')
-        setPhoneNumber('')
+        try {
+            const user_id = localStorage.getItem('id');
+            const url = 'http://localhost:8080/api/v1/user/update-user/' + user_id;
+            // console.log(url);
+            await axios.put(url,
+                {name, second_name: secondName, birthday: birthDate, phone_number: phoneNumber});
+            showToastMessage('Dane zostały zaktualizowane', 'success');
+        } catch (error) {
+            console.error(error.message);
+            showToastMessage('Dane nie zostały zaktualizowane', 'error');
+        } finally {
+            setName('');
+            setSecondName('');
+            setBirthDate('');
+            setPhoneNumber('');
+        }
     };
 
-    const handleAddressDetails = (event) => {
+    const handleAddressDetails = async (event) => {
         event.preventDefault();
-        setCountry('')
-        setCity('')
-        setStreet('')
-        setHouseNumber('')
-        setApartmentNumber('')
-        setPostalCode('')
+        try {
+            const user_id = localStorage.getItem('id');
+            const url = 'http://localhost:8080/api/v1/user/update-user-address/' + user_id;
+            await axios.put(url,
+                {address: country + ' ' + city + ' ' + street + ' ' + houseNumber + ' ' + apartmentNumber + ' ' + postalCode});
+            showToastMessage('Dane adresowe zostały zaktualizowane', 'success');
+        } catch (error) {
+            console.error(error.message);
+            showToastMessage('Dane adresowe nie zostały zaktualizowane', 'error');
+        } finally {
+            setCountry('');
+            setCity('');
+            setStreet('');
+            setHouseNumber('');
+            setApartmentNumber('');
+            setPostalCode('');
+        }
     }
 
     const goToAccountDetails = (event) => {
@@ -80,7 +116,7 @@ function Settings() {
                                     <Form onSubmit={handleChangeCredentials}>
                                         <Form.Group controlId="formEmail">
                                             <Form.Label>Adres e-mail</Form.Label>
-                                            <Form.Control type="email" placeholder="example@example.com" value={email}
+                                            <Form.Control type="email" placeholder="example@example.com" value={email} required
                                                           onChange={(e) => setEmail(e.target.value)}/>
                                         </Form.Group>
 
