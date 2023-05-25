@@ -112,7 +112,7 @@ function Settings() {
                         {showChangeCredentials && (
                             <Card>
                                 <Card.Body>
-                                    <h2 className="text-center mb-4">Dane użytkownika</h2>
+                                    <h2 className="text-center mb-4">Dane logowania</h2>
                                     <Form onSubmit={handleChangeCredentials}>
                                         <Form.Group controlId="formEmail">
                                             <Form.Label>Adres e-mail</Form.Label>
