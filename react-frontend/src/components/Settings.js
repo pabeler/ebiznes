@@ -79,7 +79,7 @@ function Settings() {
             const user_id = localStorage.getItem('id');
             const url = 'http://localhost:8080/api/v1/user/update-user-address/' + user_id;
             await axios.put(url,
-                {address: country + ' ' + city + ' ' + street + ' ' + houseNumber + ' ' + apartmentNumber + ' ' + postalCode});
+                {address: country + ',' + city + ',' + street + ',' + houseNumber + ',' + apartmentNumber + ',' + postalCode});
             showToastMessage('Dane adresowe zostały zaktualizowane', 'success');
         } catch (error) {
             console.error(error.message);
