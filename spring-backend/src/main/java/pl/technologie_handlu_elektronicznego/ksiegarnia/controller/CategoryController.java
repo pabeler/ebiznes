@@ -12,7 +12,7 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.CategoryRepos
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/category")
+@RequestMapping("/api/v1/category")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 public class CategoryController {

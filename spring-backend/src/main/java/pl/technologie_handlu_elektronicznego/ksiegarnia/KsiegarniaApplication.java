@@ -12,21 +12,7 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.CategoryRepos
 @RestController
 @RequestMapping("api/v1/")
 public class KsiegarniaApplication {
-
-	private final AuthorRepository authorRepository;
-	private final CategoryRepository categoryRepository;
-
-	KsiegarniaApplication(AuthorRepository authorRepository, CategoryRepository categoryRepository){
-		this.authorRepository = authorRepository;
-		this.categoryRepository = categoryRepository;
-	}
-
 	public static void main(String[] args) {
 		SpringApplication.run(KsiegarniaApplication.class, args);
-	}
-
-	@GetMapping("getAuthors")
-	public Long getAuthors(){
-		return authorRepository.countAllAuthors();
 	}
 }

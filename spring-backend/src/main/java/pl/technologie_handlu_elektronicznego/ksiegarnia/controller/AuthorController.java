@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.*;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Author;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.AuthorRepository;
 
+import java.util.List;
+
 @RestController
-@RequestMapping("api/v1/author")
+@RequestMapping("/api/v1/author")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
 
@@ -18,7 +20,7 @@ public class AuthorController {
     private AuthorRepository authorRepository;
 
     @PostMapping("/add-author")
-    public ResponseEntity<?> addClient(@RequestBody Author authorRequest) {
+    public ResponseEntity<?> addAuthor(@RequestBody Author authorRequest) {
         //create new author
         Author author = new Author();
         author.setName(authorRequest.getName());
@@ -61,7 +63,10 @@ public class AuthorController {
         return ResponseEntity.ok().build();
     }
 
-
+    @GetMapping("/get-authors")
+    public List<Author> getAllEmployees() {
+        return authorRepository.findAll();
+    }
 }
 
 
