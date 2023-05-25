@@ -30,7 +30,7 @@ function Settings() {
         try {
             const token = localStorage.getItem('token');
             console.log(token);
-            await axios.post('http://localhost:8080/api/v1/user/change-password/1',
+            await axios.post('http://localhost:8080/api/v1/user/change-password/',
                 {email, password});
             showToastMessage('Dane logowania zostały zaktualizowane', 'success');
         } catch (error) {
@@ -48,8 +48,19 @@ function Settings() {
             const user_id = localStorage.getItem('id');
             const url = 'http://localhost:8080/api/v1/user/update-user/' + user_id;
             // console.log(url);
-            await axios.put(url,
-                {name, second_name: secondName, birthday: birthDate, phone_number: phoneNumber});
+            const token = localStorage.getItem('token');
+
+            await axios.put(url, { 
+                name: name, 
+                second_name: secondName, 
+                birthday: birthDate, 
+                phone_number: phoneNumber
+              }, {
+                headers: {
+                  'Authorization': `Bearer ${token}`
+                }
+              });
+
             showToastMessage('Dane zostały zaktualizowane', 'success');
         } catch (error) {
             console.error(error.message);
