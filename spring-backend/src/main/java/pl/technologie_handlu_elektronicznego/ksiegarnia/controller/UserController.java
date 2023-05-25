@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.User;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.UserRepository;
-import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.AuthenticationResponse;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.JwtService;
 
 import java.util.List;
