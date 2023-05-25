@@ -13,12 +13,23 @@ import {
     BrowserRouter, Route, Routes
 } from "react-router-dom";
 import Login from "./components/Login";
-import { useState,createContext } from "react";
+import { useState, useEffect, createContext } from "react";
+
 
 export const logContext = createContext();
 
 function App() {
   const [log, setLog] = useState("unlogged");
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      setLog("logged");
+    } else {
+      setLog("unlogged");
+    }
+  }, []);
+
   return (
     <div className="App">
 

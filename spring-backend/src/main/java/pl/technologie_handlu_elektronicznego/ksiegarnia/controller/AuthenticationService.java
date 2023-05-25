@@ -51,6 +51,8 @@ public class AuthenticationService {
 //        log.info("Test");
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
+            throw new RuntimeException("Invalid password");
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
