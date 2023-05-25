@@ -150,25 +150,25 @@ function Settings() {
                                     <Form onSubmit={handleAccountDetails}>
                                         <Form.Group controlId="formName">
                                             <Form.Label>Imie</Form.Label>
-                                            <Form.Control type="text" placeholder="Jan" value={name}
+                                            <Form.Control type="text" placeholder="Jan" value={name} required
                                                           onChange={(e) => setName(e.target.value)}/>
                                         </Form.Group>
 
                                         <Form.Group controlId="formSecondName">
                                             <Form.Label>Nazwisko</Form.Label>
-                                            <Form.Control type="text" placeholder="Kowalski" value={secondName}
+                                            <Form.Control type="text" placeholder="Kowalski" value={secondName} required
                                                           onChange={(e) => setSecondName(e.target.value)}/>
                                         </Form.Group>
 
                                         <Form.Group controlId="formBirthDate">
                                             <Form.Label>Data urodzenia</Form.Label>
-                                            <Form.Control type="date" value={birthDate}
+                                            <Form.Control type="date" value={birthDate} required
                                                           onChange={(e) => setBirthDate(e.target.value)}/>
                                         </Form.Group>
 
                                         <Form.Group controlId="formPhoneNumber">
                                             <Form.Label>Numer telefonu</Form.Label>
-                                            <Form.Control type="tel" value={phoneNumber} placeholder={"+48 123 456 789"}
+                                            <Form.Control type="tel" value={phoneNumber} required placeholder={"+48 123 456 789"}
                                                           onChange={(e) => setPhoneNumber(e.target.value)}/>
                                         </Form.Group>
 
