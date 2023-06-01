@@ -28,7 +28,7 @@ function Settings() {
     const handleChangeCredentials = async (event) => {
         event.preventDefault();
         try {
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('token');
             console.log(token);
             await axios.post('http://localhost:8080/api/v1/user/change-password/',
                 {email, password});
@@ -45,10 +45,10 @@ function Settings() {
     const handleAccountDetails = async (event) => {
         event.preventDefault();
         try {
-            const user_id = localStorage.getItem('id');
+            const user_id = sessionStorage.getItem('id');
             const url = 'http://localhost:8080/api/v1/user/update-user/' + user_id;
             // console.log(url);
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('token');
 
             await axios.put(url, { 
                 name: name, 
@@ -76,7 +76,7 @@ function Settings() {
     const handleAddressDetails = async (event) => {
         event.preventDefault();
         try {
-            const user_id = localStorage.getItem('id');
+            const user_id = sessionStorage.getItem('id');
             const url = 'http://localhost:8080/api/v1/user/update-user-address/' + user_id;
             await axios.put(url,
                 {address: country + ',' + city + ',' + street + ',' + houseNumber + ',' + apartmentNumber + ',' + postalCode});

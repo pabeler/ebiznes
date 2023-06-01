@@ -21,8 +21,8 @@ export default function Login() {
         try {
             await axios.post('http://localhost:8080/api/v1/auth/authenticate', {email, password})
                 .then((response) => {
-                localStorage.setItem('token', response.data.token);
-                localStorage.setItem('id', response.data.id);
+                sessionStorage.setItem('token', response.data.token);
+                sessionStorage.setItem('id', response.data.id);
                 console.log(response.data);
                 setLog("logged");
                 navigate('/settings');
