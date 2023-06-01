@@ -1,4 +1,4 @@
-package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
+package pl.technologie_handlu_elektronicznego.ksiegarnia.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,6 +6,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.DTOs.RegisterRequest;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Role;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.User;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.UserRepository;
