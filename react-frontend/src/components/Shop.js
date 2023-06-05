@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
-import './Shop.css';
-import MultiRangeSlider from './MultiRange';
-import Books from './Books';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./Shop.css";
+import MultiRangeSlider from "./MultiRange";
+import Books from "./Books";
 
 export default function Shop() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -10,30 +10,60 @@ export default function Shop() {
   const [booksData, setBooksData] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/v1/books");
+        setBooksData(response.data);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8080/api/v1/category/get-all-categories"
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
     fetchBooks();
-    console.log(booksData);
     fetchCategories();
-    console.log(categories);
   }, []);
 
-  const fetchBooks = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/api/v1/books');
-      setBooksData(response.data);
-    } catch (error) {
-      console.error('Error fetching books:', error);
-    }
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        console.log("Fetching books with search term:", searchTerm);
+        const response = await axios.get("http://localhost:8080/api/v1/books", {
+          params: {
+            search: searchTerm,
+          },
+        });
+        console.log("Response:", response);
+        setBooksData(response.data);
+      } catch (error) {
+        console.error("Error fetching books:", error);
+      }
+    };
+
+    fetchBooks();
+  }, [searchTerm]);
+
+  const handleSearchInputChange = (event) => {
+    setSearchInput(event.target.value);
   };
 
-  const fetchCategories = async () => {
-    try {
-      const response = await axios.get('http://localhost:8080/api/v1/category/get-all-categories');
-      setCategories(response.data);
-    } catch (error) {
-      console.error('Error fetching categories:', error);
-    }
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+    setSearchTerm(searchInput);
   };
 
   const handleCategoryChange = (event) => {
@@ -43,7 +73,9 @@ export default function Shop() {
     if (isChecked) {
       setSelectedCategories([...selectedCategories, categoryName]);
     } else {
-      setSelectedCategories(selectedCategories.filter((category) => category !== categoryName));
+      setSelectedCategories(
+        selectedCategories.filter((category) => category !== categoryName)
+      );
     }
   };
 
@@ -55,7 +87,10 @@ export default function Shop() {
     if (selectedCategories.length === 0) {
       return true; // No categories selected, show all books
     } else {
-      return selectedCategories.includes(book.category); // Only show books with selected categories
+      // Only show books if any of their categories is selected
+      return book.categories.some((category) =>
+        selectedCategories.includes(category.name)
+      );
     }
   });
 
@@ -81,7 +116,10 @@ export default function Shop() {
                   id={`category-${category.id}`}
                   onChange={handleCategoryChange}
                 />
-                <label className="form-check-label" htmlFor={`category-${category.id}`}>
+                <label
+                  className="form-check-label"
+                  htmlFor={`category-${category.id}`}
+                >
                   {category.name}
                 </label>
               </div>
@@ -90,15 +128,11 @@ export default function Shop() {
           <div className="mt-2">
             <p className="font-filter-block ml-custom">Bestsellery</p>
           </div>
-          <div className="form-check">
-            {/* Checkbox for bestsellers */}
-          </div>
+          <div className="form-check">{/* Checkbox for bestsellers */}</div>
           <div className="mt-2">
             <p className="font-filter-block ml-custom">Nowość</p>
           </div>
-          <div className="form-check">
-            {/* Checkbox for new releases */}
-          </div>
+          <div className="form-check">{/* Checkbox for new releases */}</div>
           <p className="font-filter-block mt-2 no-margin">Cena</p>
           <MultiRangeSlider />
           <button type="submit" className="btn btn-primary mt-3">
@@ -106,15 +140,26 @@ export default function Shop() {
           </button>
         </div>
         <div className="col-9">
-          <div className="mb-3 mt-3">
-            <input
-              type="search"
-              className="form-control"
-              id="search"
-              placeholder="Szukaj w sklepie"
-              name="search"
-            />
-          </div>
+          <form onSubmit={handleSearchSubmit}>
+            <div className="input-group mb-3">
+              <input
+                type="text"
+                className="form-control"
+                placeholder="Szukaj w sklepie"
+                aria-label="Szukaj w sklepie"
+                aria-describedby="button-addon2"
+                value={searchInput}
+                onChange={handleSearchInputChange}
+              />
+              <button
+                className="btn btn-outline-secondary"
+                type="submit"
+                id="button-addon2"
+              >
+                Szukaj
+              </button>
+            </div>
+          </form>
           <div className="settings-block">
             {/* Books component */}
             <Books books={currentBooks} />
@@ -122,9 +167,19 @@ export default function Shop() {
             <nav>
               <ul className="pagination">
                 {filteredBooks.length > booksPerPage &&
-                  [...Array(Math.ceil(filteredBooks.length / booksPerPage))].map((_, index) => (
-                    <li key={index} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
-                      <button className="page-link" onClick={() => paginate(index + 1)}>
+                  [
+                    ...Array(Math.ceil(filteredBooks.length / booksPerPage)),
+                  ].map((_, index) => (
+                    <li
+                      key={index}
+                      className={`page-item ${
+                        currentPage === index + 1 ? "active" : ""
+                      }`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => paginate(index + 1)}
+                      >
                         {index + 1}
                       </button>
                     </li>

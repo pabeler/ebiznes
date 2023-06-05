@@ -1,6 +1,7 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,7 +26,7 @@ public class Book {
     @Column(name = "price")
     private Float price;
 
-    @OneToMany
+    @OneToMany(mappedBy = "book")
     @JsonIgnore
     private Set<Review> reviews;
 
@@ -33,6 +34,7 @@ public class Book {
     @JoinTable(name = "`books_categories`",
             joinColumns = @JoinColumn(name = "bookid"),
             inverseJoinColumns = @JoinColumn(name = "categoryid"))
+    @JsonIgnoreProperties("book")
     private Set<Category> categories;
 
     @OneToOne
@@ -46,10 +48,11 @@ public class Book {
     @ManyToMany
     @JoinTable(name = "`books_authors`",
             joinColumns = @JoinColumn(name = "bookid"),
-            inverseJoinColumns = @JoinColumn(name = "categoryid"))
+            inverseJoinColumns = @JoinColumn(name = "authorid"))
+    @JsonIgnoreProperties("book")
     private Set<Author> authors;
 
-    @OneToMany
+    @OneToMany(mappedBy = "book")
     @JsonIgnore
     private Set<OrderDetail> orderDetails;
 

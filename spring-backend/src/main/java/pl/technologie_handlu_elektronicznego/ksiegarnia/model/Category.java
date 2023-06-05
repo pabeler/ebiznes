@@ -1,5 +1,6 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ public class Category {
     private String name;
 
     @ManyToMany(mappedBy = "categories")
+    @JsonIgnoreProperties("categories")
     private Set<Book> book;
 
 }

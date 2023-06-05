@@ -24,4 +24,11 @@ public class BookController {
         return bookService.getBooksByCategory(category);
     }
 
+    @GetMapping(params = "search")
+    public List<Book> getBooksBySearchTerm(@RequestParam("search") String searchTerm) {
+        if (searchTerm == null || searchTerm.isEmpty())
+            return bookService.getAllBooks();
+        return bookService.getBooksBySearchTerm(searchTerm);
+    }
+
 }

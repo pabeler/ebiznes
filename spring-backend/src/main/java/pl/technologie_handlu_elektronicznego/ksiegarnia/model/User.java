@@ -1,6 +1,7 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -50,7 +51,8 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @OneToMany
+    @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Order> orders;
 
     @Override
