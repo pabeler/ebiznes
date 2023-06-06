@@ -10,8 +10,13 @@ export default function Shop() {
   const [booksData, setBooksData] = useState([]);
   const [categories, setCategories] = useState([]);
   const [selectedCategories, setSelectedCategories] = useState([]);
+  const [tempSelectedCategories, setTempSelectedCategories] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchInput, setSearchInput] = useState("");
+  const [minPrice, setMinPrice] = useState(0);
+  const [maxPrice, setMaxPrice] = useState(Infinity);
+  const [tempMinPrice, setTempMinPrice] = useState(0);
+  const [tempMaxPrice, setTempMaxPrice] = useState(Infinity);
 
   useEffect(() => {
     const fetchBooks = async () => {
@@ -41,13 +46,11 @@ export default function Shop() {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        console.log("Fetching books with search term:", searchTerm);
         const response = await axios.get("http://localhost:8080/api/v1/books", {
           params: {
             search: searchTerm,
           },
         });
-        console.log("Response:", response);
         setBooksData(response.data);
       } catch (error) {
         console.error("Error fetching books:", error);
@@ -71,12 +74,25 @@ export default function Shop() {
     const isChecked = event.target.checked;
 
     if (isChecked) {
-      setSelectedCategories([...selectedCategories, categoryName]);
+      setTempSelectedCategories([...tempSelectedCategories, categoryName]);
     } else {
-      setSelectedCategories(
-        selectedCategories.filter((category) => category !== categoryName)
+      setTempSelectedCategories(
+        tempSelectedCategories.filter((category) => category !== categoryName)
       );
     }
+  };
+
+  const handlePriceChange = (min, max) => {
+    setTempMinPrice(min);
+    setTempMaxPrice(max);
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    setSelectedCategories(tempSelectedCategories);
+    setMinPrice(tempMinPrice);
+    setMaxPrice(tempMaxPrice);
   };
 
   // Get current books based on pagination and selected categories
@@ -88,8 +104,13 @@ export default function Shop() {
       return true; // No categories selected, show all books
     } else {
       // Only show books if any of their categories is selected
-      return book.categories.some((category) =>
-        selectedCategories.includes(category.name)
+      console.log(minPrice, maxPrice);
+      return (
+        book.categories.some((category) =>
+          selectedCategories.includes(category.name)
+        ) &&
+        book.price >= minPrice &&
+        book.price <= maxPrice
       );
     }
   });
@@ -134,8 +155,16 @@ export default function Shop() {
           </div>
           <div className="form-check">{/* Checkbox for new releases */}</div>
           <p className="font-filter-block mt-2 no-margin">Cena</p>
-          <MultiRangeSlider />
-          <button type="submit" className="btn btn-primary mt-3">
+          <MultiRangeSlider
+            minPrice={tempMinPrice}
+            maxPrice={tempMaxPrice}
+            onPriceChange={handlePriceChange}
+          />
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            className="btn btn-primary mt-3"
+          >
             Submit
           </button>
         </div>
