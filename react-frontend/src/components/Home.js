@@ -1,5 +1,6 @@
 import React from "react"
 import "./Home.css";
+import Bestsellers from "./Bestsellers";
 
 export default function Home() {
     return (
@@ -60,85 +61,7 @@ export default function Home() {
 
 {/* ----------------------------- BESTSELLERY ----------------------------- */}
 
-<div id="products" className="products">
-    <div className="container-fluid">
-        <div className="row">
-            <div className="col-sm-12">
-                <div className="headline text-center mb-5 products-header-text bg-white pt-5">
-                    <h2 className="pb-3 position-relative d-inline-block products-header-text">
-                        <b>BESTSELLERY | ZOBACZ NAJCHĘTNIEJ WYBIERANE PRODUKTY</b>
-                    </h2>
-                </div>
-            </div>
-        </div>
-        <div className="row">
-            <div className="col-sm-6 col-lg-3 product">
-                <a href="http://localhost:3000/" className="d-block text-center mb-4">
-                    <div className="product-list">
-                        <div className="position-relative">
-                            <img src="images\Przedza.png" alt="product" className="img-fluid product-image"/>
-                        </div>
-                        <div className="product-name pt-3">
-                            <h3 className="text-capitalize">
-                                <b>Przędza. W poszukiwaniu wewnęrznej wolności.</b>
-                            </h3>
-                            <p className="product-price mb-0">26,60zł</p>
-                            <button type="button"className="product-button btn btn-outline-danger">Dodaj do koszyka</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div className="col-sm-6 col-lg-3 product">
-                <a href="http://localhost:3000/" className="d-block text-center mb-4">
-                    <div className="product-list">
-                        <div className="position-relative">
-                            <img src="images\JP2.png" alt="product" className="img-fluid product-image"/>
-                        </div>
-                        <div className="product-name pt-3">
-                            <h3 className="text-capitalize">
-                                <b>Maxima Culpa. Jan Paweł II wiedział</b>
-                            </h3>
-                            <p className="product-price mb-0">26,60zł</p>
-                            <button type="button"className="product-button btn btn-outline-danger">Dodaj do koszyka</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div className="col-sm-6 col-lg-3 product">
-                <a href="http://localhost:3000/" className="d-block text-center mb-4">
-                    <div className="product-list">
-                        <div className="position-relative">
-                            <img src="images\Corka.png" alt="product" className="img-fluid product-image"/>
-                        </div>
-                        <div className="product-name pt-3">
-                            <h3 className="text-capitalize">
-                                <b>Córka z Włoch. Cykl Utracone córki. Tom1</b>
-                            </h3>
-                            <p className="product-price mb-0">26,60zł</p>
-                            <button type="button"className="product-button btn btn-outline-danger">Dodaj do koszyka</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-            <div className="col-sm-6 col-lg-3 product">
-                <a href="http://localhost:3000/" className="d-block text-center mb-4">
-                    <div className="product-list">
-                        <div className="position-relative">
-                            <img src="images\Rowni.png" alt="product" className="img-fluid product-image"/>
-                        </div>
-                        <div className="product-name pt-3">
-                            <h3 className="text-capitalize">
-                                <b>Równi bogom</b>
-                            </h3>
-                            <p className="product-price mb-0">26,60zł</p>
-                            <button type="button"className="product-button btn btn-outline-danger">Dodaj do koszyka</button>
-                        </div>
-                    </div>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
+<Bestsellers />
 
 
 {/* ----------------------------- DLACZEGO MY / INFO ----------------------------- */}

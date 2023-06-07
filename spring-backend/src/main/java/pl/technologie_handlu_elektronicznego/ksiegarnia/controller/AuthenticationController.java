@@ -1,14 +1,12 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.DTOs.RegisterRequest;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.AuthenticationRequest;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.AuthenticationResponse;
-
-import java.io.IOException;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.service.AuthenticationService;
 
 @RestController
 @RequestMapping("/api/v1/auth")

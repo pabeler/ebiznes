@@ -1,5 +1,6 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,5 +37,6 @@ public class Order {
     private Status status;
 
     @OneToMany(mappedBy = "order")
+    @JsonIgnore
     private Set<OrderDetail> items;
 }

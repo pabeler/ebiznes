@@ -22,7 +22,7 @@ function App() {
   const [log, setLog] = useState("unlogged");
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     if (token) {
       setLog("logged");
     } else {
