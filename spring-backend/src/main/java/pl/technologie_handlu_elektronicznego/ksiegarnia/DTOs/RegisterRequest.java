@@ -1,4 +1,4 @@
-package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
+package pl.technologie_handlu_elektronicznego.ksiegarnia.DTOs;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
