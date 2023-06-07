@@ -306,7 +306,6 @@ function Settings() {
                                         <Form.Group controlId="formBirthDate">
                                             <Form.Label>Data urodzenia</Form.Label>
                                             <Form.Control
-                                                required
                                                 type="date"
                                                 value={birthDate}
                                                 onChange={(e) => setBirthDate(e.target.value)}/>
@@ -486,7 +485,7 @@ function Settings() {
                                         </Form.Group>
                                         <Form.Group controlId={"formApartmentNumber"}>
                                             <Form.Label>Numer mieszkania</Form.Label>
-                                            <Form.Control type="text" placeholder="1" value={apartmentNumber} required={true}
+                                            <Form.Control type="text" placeholder="1" value={apartmentNumber}
                                                             onChange={(e) => setApartmentNumber(e.target.value)}/>
                                         </Form.Group>
                                         <Form.Group controlId={"formPostalCode"}>
