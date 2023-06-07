@@ -8,7 +8,9 @@ import AboutUs from './components/AboutUs';
 import Contact from './components/Contact';
 import Categories from './components/Categories';
 import Services from './components/Services';
-import Blogs from './components/Blogs'  
+import Blogs from './components/Blogs'
+import Basket from "./components/Basket";
+import axios from "axios";
 import {
     BrowserRouter, Route, Routes
 } from "react-router-dom";
@@ -25,13 +27,58 @@ function App() {
   const [log, setLog] = useState("unlogged");
 
   useEffect(() => {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem("token");
+
     if (token) {
       setLog("logged");
+      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
       setLog("unlogged");
     }
+
+    axios.interceptors.response.use(
+      (response) => response,
+      async (error) => {
+        const originalRequest = error.config;
+        if (error.response.status === 401 && !originalRequest._retry) {
+          originalRequest._retry = true;
+          try {
+            const response = await axios.post(
+              "http://localhost:8080/api/v1/auth/refresh",
+              {
+                refreshToken: localStorage.getItem("refreshToken"),
+              }
+            );
+            const newToken = response.data.token;
+            localStorage.setItem("token", newToken);
+            localStorage.setItem("refreshToken", response.data.refreshToken);
+            axios.defaults.headers.common[
+              "Authorization"
+            ] = `Bearer ${newToken}`;
+            return axios(originalRequest);
+          } catch (error) {
+            console.error(error.message);
+            console.log("Nie udało się odświeżyć tokenu", "error");
+            logout();
+          }
+        }
+        return Promise.reject(error);
+      }
+    );
   }, []);
+
+  function logout() {
+    // Remove tokens and user info from the local storage
+    localStorage.removeItem("token");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("id");
+
+    // Remove auth header for future requests
+    delete axios.defaults.headers.common["Authorization"];
+
+    // Redirect to login page or home page
+    this.props.history.push("/login");
+  }
 
   return (
     <div className="App">
@@ -52,13 +99,13 @@ function App() {
                 <Route path="/blogs" element={<Blogs/>}/>
                 <Route path="/categories" element={<Categories/>}/>
                 <Route path="/services" element={<Services/>}/>
+                <Route path="/basket" element={<Basket />} />
             </Routes>
 
             <Footer/>
             </logContext.Provider>
         </BrowserRouter>
         <ToastContainer/>
-        
     </div>
   );
 }
