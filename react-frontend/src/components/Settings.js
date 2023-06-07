@@ -1,11 +1,13 @@
 import "./Settings.css"
-import {Button, Card, Form} from "react-bootstrap";
-import {ToastContainer} from "react-toastify";
-import {useState} from "react";
+import {Button, Card, Col, Container, Form, Row} from "react-bootstrap";
+import {useEffect, useState} from "react";
 import axios from "axios";
 import {showToastMessage} from "./ToastMessage";
+import {ToastContainer} from "react-toastify";
 
 function Settings() {
+    const [data, setData] = useState(null);
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
@@ -25,10 +27,33 @@ function Settings() {
     const [showAddressDetails, setShowAddressDetails] = useState(false);
     const [showChangeCredentials, setShowChangeCredentials] = useState(false);
 
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const fetchData = () => {
+        const id = sessionStorage.getItem('id');
+        const url = `http://localhost:8080/api/v1/user/get-user/${id}`;
+
+        try {
+            axios.get(url)
+                .then(response => {
+                    const responseData = response.data;
+                    setData(responseData);
+                    // alert(JSON.stringify(responseData));
+                })
+                .catch(error => {
+                    alert(error.message);
+                });
+        } catch (error) {
+            alert(error.message);
+        }
+    };
+
     const handleChangeCredentials = async (event) => {
         event.preventDefault();
         try {
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('token');
             console.log(token);
             await axios.post('http://localhost:8080/api/v1/user/change-password/',
                 {email, password});
@@ -45,10 +70,10 @@ function Settings() {
     const handleAccountDetails = async (event) => {
         event.preventDefault();
         try {
-            const user_id = localStorage.getItem('id');
+            const user_id = sessionStorage.getItem('id');
             const url = 'http://localhost:8080/api/v1/user/update-user/' + user_id;
             // console.log(url);
-            const token = localStorage.getItem('token');
+            const token = sessionStorage.getItem('token');
 
             await axios.put(url, { 
                 name: name, 
@@ -62,6 +87,7 @@ function Settings() {
               });
 
             showToastMessage('Dane zostały zaktualizowane', 'success');
+            window.location.reload();
         } catch (error) {
             console.error(error.message);
             showToastMessage('Dane nie zostały zaktualizowane', 'error');
@@ -76,11 +102,12 @@ function Settings() {
     const handleAddressDetails = async (event) => {
         event.preventDefault();
         try {
-            const user_id = localStorage.getItem('id');
+            const user_id = sessionStorage.getItem('id');
             const url = 'http://localhost:8080/api/v1/user/update-user-address/' + user_id;
             await axios.put(url,
                 {address: country + ',' + city + ',' + street + ',' + houseNumber + ',' + apartmentNumber + ',' + postalCode});
             showToastMessage('Dane adresowe zostały zaktualizowane', 'success');
+            window.location.reload();
         } catch (error) {
             console.error(error.message);
             showToastMessage('Dane adresowe nie zostały zaktualizowane', 'error');
@@ -115,15 +142,31 @@ function Settings() {
         setShowChangeCredentials(true);
     }
 
+    const dateConverter = (date) => {
+        const newDate = new Date(date);
+        const year = newDate.getFullYear();
+        let month = newDate.getMonth()+1;
+        let day = newDate.getDate();
+        if (month < 10) month = "0" + month;
+        if (day < 10) day = "0" + day;
+        return year + "-" + month + "-" + day;
+    }
+
+    const addressConverter = (address) => {
+        if (address === null) return ['', '', '', '', '', ''];
+        const newAddress = address.split(',');
+        return [newAddress[0], newAddress[1], newAddress[2], newAddress[3], newAddress[4], newAddress[5]];
+    }
+
     return (
         <>
-            <div className="container mt-5">
-                <div className="row justify-content-center">
-                    <div className="col-lg-6">
-                        {showChangeCredentials && (
+            {showChangeCredentials && (
+                <div className="container mt-5">
+                    <div className="row justify-content-center">
+                        <div className="col-lg-6">
                             <Card>
                                 <Card.Body>
-                                    <h2 className="text-center mb-4">Dane logowania</h2>
+                                    <h2>Dane logowania</h2>
                                     <Form onSubmit={handleChangeCredentials}>
                                         <Form.Group controlId="formEmail">
                                             <Form.Label>Adres e-mail</Form.Label>
@@ -152,22 +195,111 @@ function Settings() {
                                     </Form>
                                 </Card.Body>
                             </Card>
-                        )}
+                        </div>
+                    </div>
+                </div>
+            )}
 
-                        {showAccountDetails && (
+            {showAccountDetails && (
+                <Container>
+                    <Row>
+                        <Col>
+                            <Card>
+                                <Card.Body>
+                                    <h2>Aktualne dane</h2>
+                                    <Container>
+                                        <Row>
+                                            <Card>
+                                                <Card.Body>
+                                                    <h5 className="text-center mb-4">Imie</h5>
+                                                    {/*<h7 className="text-center mb-4">Nie zdefiniowano</h7>*/}
+                                                    {data ? (
+                                                        <h7 className="text-center mb-4">
+                                                            {data.name ? (
+                                                                data.name
+                                                            ) : (
+                                                                "Nie zdefiniowano"
+                                                                )
+                                                            }
+                                                        </h7>
+                                                    ) : (
+                                                        <h7 className="text-center mb-4">Nie zdefiniowano</h7>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                            <Card>
+                                                <Card.Body>
+                                                    <h5 className="text-center mb-4">Nazwisko</h5>
+                                                    {/*<h7 className="text-center mb-4">Nie zdefiniowano</h7>*/}
+                                                    {data ? (
+                                                        <h7 className="text-center mb-4">
+                                                            {data.second_name ? (
+                                                                data.second_name
+                                                            ) : (
+                                                                "Nie zdefiniowano"
+                                                                )
+                                                            }
+                                                        </h7>
+                                                    ) : (
+                                                        <h7 className="text-center mb-4">Nie zdefiniowano</h7>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                            <Card>
+                                                <Card.Body>
+                                                    <h5 className="text-center mb-4">Data urodzenia</h5>
+                                                    {/*<h7 className="text-center mb-4">Nie zdefiniowano</h7>*/}
+                                                    {data ? (
+                                                        <h7 className="text-center mb-4">
+                                                            {data.birthday ? (
+                                                                dateConverter(data.birthday)
+                                                            ) : (
+                                                                "Nie zdefiniowano"
+                                                                )
+                                                            }
+                                                        </h7>
+                                                    ) : (
+                                                        <h7 className="text-center mb-4">Nie zdefiniowano</h7>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                            <Card>
+                                                <Card.Body>
+                                                    <h5 className="text-center mb-4">Numer telefonu</h5>
+                                                    {/*<h7 className="text-center mb-4">Nie zdefiniowano</h7>*/}
+                                                    {data ? (
+                                                        <h7 className="text-center mb-4">
+                                                            {data.phone_number ? (
+                                                                data.phone_number
+                                                            ) : (
+                                                                "Nie zdefiniowano"
+                                                                )
+                                                            }
+                                                        </h7>
+                                                    ) : (
+                                                        <h7 className="text-center mb-4">Nie zdefiniowano</h7>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                        </Row>
+                                    </Container>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col>
                             <Card>
                                 <Card.Body>
                                     <h2 className="text-center mb-4">Dane użytkownika</h2>
                                     <Form onSubmit={handleAccountDetails}>
                                         <Form.Group controlId="formName">
                                             <Form.Label>Imie</Form.Label>
-                                            <Form.Control type="text" placeholder="Jan" value={name} required
+                                            <Form.Control type="text" placeholder="Jan" value={name} required={true}
                                                           onChange={(e) => setName(e.target.value)}/>
                                         </Form.Group>
 
                                         <Form.Group controlId="formSecondName">
                                             <Form.Label>Nazwisko</Form.Label>
-                                            <Form.Control type="text" placeholder="Kowalski" value={secondName} required
+                                            <Form.Control type="text" placeholder="Kowalski" value={secondName} required={true}
                                                           onChange={(e) => setSecondName(e.target.value)}/>
                                         </Form.Group>
 
@@ -182,7 +314,7 @@ function Settings() {
 
                                         <Form.Group controlId="formPhoneNumber">
                                             <Form.Label>Numer telefonu</Form.Label>
-                                            <Form.Control type="tel" value={phoneNumber} required placeholder={"+48 123 456 789"}
+                                            <Form.Control type="tel" value={phoneNumber} placeholder={"+48 123 456 789"} required={true}
                                                           onChange={(e) => setPhoneNumber(e.target.value)}/>
                                         </Form.Group>
 
@@ -200,9 +332,134 @@ function Settings() {
                                     </Form>
                                 </Card.Body>
                             </Card>
-                        )}
+                        </Col>
+                    </Row>
+                </Container>
+            )}
 
-                        {showAddressDetails && (
+            {showAddressDetails && (
+                <Container>
+                    <Row>
+                        <Col>
+                            <Card>
+                                <Card.Body>
+                                    <h2>Aktualne dane</h2>
+                                    <Container>
+                                        <Row>
+                                            <Card>
+                                                <Card.Body>
+                                                    <h5 className="text-center mb-4">Kraj</h5>
+                                                    {/*<h7 className="text-center mb-4">Nie zdefiniowano</h7>*/}
+                                                    {data ? (
+                                                        <h7 className="text-center mb-4">
+                                                            {addressConverter(data.address)[0] ? (
+                                                                addressConverter(data.address)[0]
+                                                            ) : (
+                                                                "Nie zdefiniowano"
+                                                                )
+                                                            }
+                                                        </h7>
+                                                    ) : (
+                                                        <h7 className="text-center mb-4">Nie zdefiniowano</h7>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                            <Card>
+                                                <Card.Body>
+                                                    <h5 className="text-center mb-4">Miasto</h5>
+                                                    {/*<h7 className="text-center mb-4">Nie zdefiniowano</h7>*/}
+                                                    {data ? (
+                                                        <h7 className="text-center mb-4">
+                                                            {addressConverter(data.address)[1] ? (
+                                                                addressConverter(data.address)[1]
+                                                            ) : (
+                                                                "Nie zdefiniowano"
+                                                                )
+                                                            }
+                                                        </h7>
+                                                    ) : (
+                                                        <h7 className="text-center mb-4">Nie zdefiniowano</h7>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                            <Card>
+                                                <Card.Body>
+                                                    <h5 className="text-center mb-4">Ulica</h5>
+                                                    {/*<h7 className="text-center mb-4">Nie zdefiniowano</h7>*/}
+                                                    {data ? (
+                                                        <h7 className="text-center mb-4">
+                                                            {addressConverter(data.address)[2] ? (
+                                                                addressConverter(data.address)[2]
+                                                            ) : (
+                                                                "Nie zdefiniowano"
+                                                                )
+                                                            }
+                                                        </h7>
+                                                    ) : (
+                                                        <h7 className="text-center mb-4">Nie zdefiniowano</h7>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                            <Card>
+                                                <Card.Body>
+                                                    <h5 className="text-center mb-4">Numer domu</h5>
+                                                    {/*<h7 className="text-center mb-4">Nie zdefiniowano</h7>*/}
+                                                    {data ? (
+                                                        <h7 className="text-center mb-4">
+                                                            {addressConverter(data.address)[3] ? (
+                                                                addressConverter(data.address)[3]
+                                                            ) : (
+                                                                "Nie zdefiniowano"
+                                                                )
+                                                            }
+                                                        </h7>
+                                                    ) : (
+                                                        <h7 className="text-center mb-4">Nie zdefiniowano</h7>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                            <Card>
+                                                <Card.Body>
+                                                    <h5 className="text-center mb-4">Numer mieszkania</h5>
+                                                    {/*<h7 className="text-center mb-4">Nie zdefiniowano</h7>*/}
+                                                    {data ? (
+                                                        <h7 className="text-center mb-4">
+                                                            {addressConverter(data.address)[4] ? (
+                                                                addressConverter(data.address)[4]
+                                                            ) : (
+                                                                "Nie zdefiniowano"
+                                                                )
+                                                            }
+                                                        </h7>
+                                                    ) : (
+                                                        <h7 className="text-center mb-4">Nie zdefiniowano</h7>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                            <Card>
+                                                <Card.Body>
+                                                    <h5 className="text-center mb-4">Kod pocztowy</h5>
+                                                    {/*<h7 className="text-center mb-4">Nie zdefiniowano</h7>*/}
+                                                    {data ? (
+                                                        <h7 className="text-center mb-4">
+                                                            {addressConverter(data.address)[5] ? (
+                                                                addressConverter(data.address)[5]
+                                                            ) : (
+                                                                "Nie zdefiniowano"
+                                                                )
+                                                            }
+                                                        </h7>
+                                                    ) : (
+                                                        <h7 className="text-center mb-4">Nie zdefiniowano</h7>
+                                                    )}
+                                                </Card.Body>
+                                            </Card>
+                                        </Row>
+                                    </Container>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                        <Col>
                             <Card>
                                 <Card.Body>
                                     <h2 className="text-center mb-4">Dane adresowe</h2>
@@ -250,10 +507,10 @@ function Settings() {
                                     </Form>
                                 </Card.Body>
                             </Card>
-                        )}
-                    </div>
-                </div>
-            </div>
+                        </Col>
+                    </Row>
+                </Container>
+            )}
             <ToastContainer/>
         </>
     );

@@ -57,6 +57,13 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/get-user/{id}")
+    public ResponseEntity<?> getUser(@PathVariable("id") Integer id) throws Exception {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new Exception("User not found"));
+        return ResponseEntity.ok(user);
+    }
+
     /*@PostMapping("/change-password/{id}")
     public ResponseEntity<?> changeCredentials(@PathVariable("id") Integer id, @RequestBody RegisterRequest request) throws Exception {
         User user = userRepository.findById(id)
