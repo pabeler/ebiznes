@@ -8,7 +8,7 @@ export default function MyProfile() {
     
   </button>
         <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#"><Link to={"/settings"} className="nav-link nav-item_join">Settings</Link></a></li>
+            <li><Link to={"/accountDetails"} className="nav-link nav-item_join">Settings</Link></li>
         </ul>
     </div>
     )

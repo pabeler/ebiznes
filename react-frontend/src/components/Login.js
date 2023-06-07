@@ -25,7 +25,7 @@ export default function Login() {
                 sessionStorage.setItem('id', response.data.id);
                 console.log(response.data);
                 setLog("logged");
-                navigate('/settings');
+                navigate('/accountDetails');
                 showToastMessage('Witaj ' + email, 'success');
             }).catch((error) => {
                 console.error(error.message);
