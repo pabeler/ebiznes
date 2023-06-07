@@ -146,15 +146,6 @@ export default function Shop() {
               </div>
             ))}
           </div>
-          <div className="mt-2">
-            <p className="font-filter-block ml-custom">Bestsellery</p>
-          </div>
-          <div className="form-check">{/* Checkbox for bestsellers */}</div>
-          <div className="mt-2">
-            <p className="font-filter-block ml-custom">Nowość</p>
-          </div>
-          <div className="form-check">{/* Checkbox for new releases */}</div>
-          <p className="font-filter-block mt-2 no-margin">Cena</p>
           <MultiRangeSlider
             minPrice={tempMinPrice}
             maxPrice={tempMaxPrice}
