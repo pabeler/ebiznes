@@ -1,5 +1,6 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +12,7 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.service.AuthenticationSe
 @RestController
 @RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "http://localhost:3000")
-@RequiredArgsConstructor
+@AllArgsConstructor
 
 public class AuthenticationController {
 
@@ -28,6 +29,10 @@ public class AuthenticationController {
             @RequestBody AuthenticationRequest request
     ) {
         return ResponseEntity.ok(service.authenticate(request));
+    }
+    @PostMapping("/refresh")
+    public AuthenticationResponse refresh(@RequestBody String refreshToken) {
+        return service.refreshToken(refreshToken);
     }
 
 //    @PostMapping("/refresh-token")

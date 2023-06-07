@@ -48,8 +48,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 );
                 authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+            } else if (jwtService.isTokenExpired(jwt)) {
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                response.setHeader("reason", "token expired");
+                return;
             }
         }
         filterChain.doFilter(request, response);
     }
+
 }

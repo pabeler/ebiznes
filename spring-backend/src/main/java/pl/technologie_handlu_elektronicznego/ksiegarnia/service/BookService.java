@@ -21,7 +21,43 @@ public class BookService {
         return bookRepository.findByCategory(category);
     }
 
+    public List<Book> getBooksByAuthorName(String authorName) {
+        return bookRepository.findBookByAuthors(authorName);
+    }
+
     public List<Book> getBooksBySearchTerm(@Param("searchTerm")String searchTerm) {
        return bookRepository.findByTitleOrAuthorName( searchTerm );
+    }
+
+
+    public Book updateBook(Integer id, Book book) {
+        Book bookToUpdate = bookRepository.findById(id).orElseThrow();
+        bookToUpdate.setTitle(book.getTitle());
+        bookToUpdate.setAuthors(book.getAuthors());
+        bookToUpdate.setPublisher(book.getPublisher());
+        bookToUpdate.setDescription(book.getDescription());
+        bookToUpdate.setCategories(book.getCategories());
+        bookToUpdate.setQuantity(book.getQuantity());
+        bookToUpdate.setPrice(book.getPrice());
+        bookToUpdate.setImage_url(book.getImage_url());
+        return bookRepository.save(bookToUpdate);
+    }
+
+    public Book addBook(Book book) {
+        Book bookToAdd = new Book();
+        bookToAdd.setTitle(book.getTitle());
+        bookToAdd.setAuthors(book.getAuthors());
+        bookToAdd.setPublisher(book.getPublisher());
+        bookToAdd.setDescription(book.getDescription());
+        bookToAdd.setCategories(book.getCategories());
+        bookToAdd.setQuantity(book.getQuantity());
+        bookToAdd.setPrice(book.getPrice());
+        bookToAdd.setImage_url(book.getImage_url());
+
+        return bookRepository.save(book);
+    }
+
+    public List<Book> getBooksByTitle(String title) {
+        return bookRepository.findByTitle(title);
     }
 }
