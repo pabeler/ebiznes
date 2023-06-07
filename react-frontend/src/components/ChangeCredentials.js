@@ -1,18 +1,16 @@
 import {Button, Card, Form} from "react-bootstrap";
 import {useState} from "react";
-import axios from "axios";
-import {showToastMessage} from "./ToastMessage";
 import {useNavigate} from "react-router-dom";
 
 export default function ChangeCredentials() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [oldPassword, setOldPassword] = useState('');
+    const [newPassword, setNewPassword] = useState('');
 
     const navigate = useNavigate();
 
     const handleChangeCredentials = async (event) => {
         event.preventDefault();
-        try {
+        /*try {
             const token = sessionStorage.getItem('token');
             console.log(token);
             await axios.post('http://localhost:8080/api/v1/user/change-password/',
@@ -24,7 +22,7 @@ export default function ChangeCredentials() {
         } finally {
             setEmail('');
             setPassword('');
-        }
+        }*/
     };
 
     return (
@@ -33,19 +31,20 @@ export default function ChangeCredentials() {
             <div className="col-lg-6">
                 <Card>
                     <Card.Body>
-                        <h2>Dane logowania</h2>
+                        <h2>Zmiana hasła</h2>
                         <Form onSubmit={handleChangeCredentials}>
                             <Form.Group controlId="formEmail">
-                                <Form.Label>Adres e-mail</Form.Label>
-                                <Form.Control type="email" placeholder="example@example.com" value={email} required = {true}
-                                              onChange={(e) => setEmail(e.target.value)}/>
+                                <Form.Label>Stare hasło</Form.Label>
+                                <Form.Control type="password" placeholder="********" value={oldPassword}
+                                              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required = {true}
+                                              onChange={(e) => setOldPassword(e.target.value)}/>
                             </Form.Group>
 
                             <Form.Group controlId="formPassword">
-                                <Form.Label>Hasło</Form.Label>
-                                <Form.Control type="password" placeholder="********" value={password}
+                                <Form.Label>Nowe hasło</Form.Label>
+                                <Form.Control type="password" placeholder="********" value={newPassword}
                                               pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required = {true}
-                                              onChange={(e) => setPassword(e.target.value)}/>
+                                              onChange={(e) => setNewPassword(e.target.value)}/>
                             </Form.Group>
 
                             <Button variant="primary" type="submit" className="w-100 mt-3 mb-3">
