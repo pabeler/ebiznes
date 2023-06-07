@@ -170,15 +170,14 @@ function Settings() {
                                     <Form onSubmit={handleChangeCredentials}>
                                         <Form.Group controlId="formEmail">
                                             <Form.Label>Adres e-mail</Form.Label>
-                                            <Form.Control type="email" placeholder="example@example.com" value={email}
-                                                          required
+                                            <Form.Control type="email" placeholder="example@example.com" value={email} required = {true}
                                                           onChange={(e) => setEmail(e.target.value)}/>
                                         </Form.Group>
 
                                         <Form.Group controlId="formPassword">
                                             <Form.Label>Hasło</Form.Label>
                                             <Form.Control type="password" placeholder="********" value={password}
-                                                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required
+                                                          pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required = {true}
                                                           onChange={(e) => setPassword(e.target.value)}/>
                                         </Form.Group>
 
@@ -306,8 +305,11 @@ function Settings() {
 
                                         <Form.Group controlId="formBirthDate">
                                             <Form.Label>Data urodzenia</Form.Label>
-                                            <Form.Control type="date" value={birthDate}
-                                                          onChange={(e) => setBirthDate(e.target.value)}/>
+                                            <Form.Control
+                                                required
+                                                type="date"
+                                                value={birthDate}
+                                                onChange={(e) => setBirthDate(e.target.value)}/>
                                         </Form.Group>
 
                                         <Form.Group controlId="formPhoneNumber">
@@ -464,33 +466,34 @@ function Settings() {
                                     <Form onSubmit={handleAddressDetails}>
                                         <Form.Group controlId="formCountry">
                                             <Form.Label>Kraj</Form.Label>
-                                            <Form.Control type="text" placeholder="Polska" value={country}
-                                                          onChange={(e) => setCountry(e.target.value)}/>
+                                            <Form.Control type="text" placeholder="Polska" value={country} required={true}
+                                                            onChange={(e) => setCountry(e.target.value)}/>
                                         </Form.Group>
                                         <Form.Group controlId="formCity">
                                             <Form.Label>Miasto</Form.Label>
-                                            <Form.Control type="text" placeholder="Warszawa" value={city}
+                                            <Form.Control type="text" placeholder="Warszawa" value={city} required={true}
                                                           onChange={(e) => setCity(e.target.value)}/>
                                         </Form.Group>
                                         <Form.Group controlId={"formStreet"}>
                                             <Form.Label>Ulica</Form.Label>
-                                            <Form.Control type="text" placeholder="ul. Przykładowa" value={street}
-                                                          onChange={(e) => setStreet(e.target.value)}/>
+                                            <Form.Control type="text" placeholder="ul. Przykładowa" value={street} required={true}
+                                                            onChange={(e) => setStreet(e.target.value)}/>
                                         </Form.Group>
                                         <Form.Group controlId={"formHouseNumber"}>
                                             <Form.Label>Numer domu</Form.Label>
-                                            <Form.Control type="text" placeholder="1" value={houseNumber}
-                                                          onChange={(e) => setHouseNumber(e.target.value)}/>
+                                            <Form.Control type="text" placeholder="1" value={houseNumber} required={true}
+                                                            onChange={(e) => setHouseNumber(e.target.value)}/>
                                         </Form.Group>
                                         <Form.Group controlId={"formApartmentNumber"}>
                                             <Form.Label>Numer mieszkania</Form.Label>
-                                            <Form.Control type="text" placeholder="1" value={apartmentNumber}
-                                                          onChange={(e) => setApartmentNumber(e.target.value)}/>
+                                            <Form.Control type="text" placeholder="1" value={apartmentNumber} required={true}
+                                                            onChange={(e) => setApartmentNumber(e.target.value)}/>
                                         </Form.Group>
                                         <Form.Group controlId={"formPostalCode"}>
                                             <Form.Label>Kod pocztowy</Form.Label>
-                                            <Form.Control type="text" placeholder="00-000" value={postalCode}
-                                                          onChange={(e) => setPostalCode(e.target.value)}/>
+                                            <Form.Control type="text" placeholder="00-000" value={postalCode} required={true}
+                                                          pattern={"[0-9]{2}-[0-9]{3}"}
+                                                            onChange={(e) => setPostalCode(e.target.value)}/>
                                         </Form.Group>
                                         <Button variant="primary" type="submit" className="w-100 mt-3">
                                             Zatwierdź zmiany
