@@ -33,6 +33,7 @@ export default function Login() {
           sessionStorage.setItem("email", decoded.sub);
           sessionStorage.setItem("id", decoded.user_id);
           sessionStorage.setItem("role", decoded.role);
+          alert(sessionStorage.getItem("role"));
           // console.log(sessionStorage.getItem("id"));
           // console.log(decoded);
           setLog("logged");
@@ -136,9 +137,9 @@ export default function Login() {
                       Zaloguj
                     </Button>
 
-                    <Button variant="link" onClick={goToResetPassword}>
+                    {/*<Button variant="link" onClick={goToResetPassword}>
                       Zapomniałeś hasła?
-                    </Button>
+                    </Button>*/}
 
                     <Button variant="link" onClick={goToRegistration}>
                       Rejestracja
