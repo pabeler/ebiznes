@@ -69,6 +69,7 @@ export default function Login() {
       });
       console.log("Rejestracja powiodła się");
       showToastMessage("Rejestracja powiodła się", "success");
+      goToLogin(event)
     } catch (error) {
       console.error(error.message);
       showToastMessage("Rejestracja nie powiodła się", "error");
@@ -78,11 +79,11 @@ export default function Login() {
     }
   };
 
-  const goToResetPassword = (event) => {
+  /*const goToResetPassword = (event) => {
     event.preventDefault();
     setShowLoginForm(false);
     setShowForgotPassword(true);
-  };
+  };*/
 
   const goToRegistration = (event) => {
     event.preventDefault();
