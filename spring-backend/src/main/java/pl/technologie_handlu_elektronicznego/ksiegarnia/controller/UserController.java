@@ -1,6 +1,9 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api/v1/user")
 @CrossOrigin(origins = "http://localhost:3000")
 @RequiredArgsConstructor
+@Slf4j
 
 public class UserController {
     private final PasswordEncoder passwordEncoder;
@@ -62,6 +66,26 @@ public class UserController {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
         return ResponseEntity.ok(user);
+    }
+
+    @PostMapping("/change-password/{id}")
+    public ResponseEntity<?> changePassword(@PathVariable("id") Integer id, @RequestBody String password) throws Exception {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new Exception("User not found"));
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(password);
+            String oldPassword = jsonNode.get("oldPassword").asText();
+            String newPassword = jsonNode.get("newPassword").asText();
+            if (passwordEncoder.matches(oldPassword, user.getPassword())) {
+                user.setPassword(passwordEncoder.encode(newPassword));
+                userRepository.save(user);
+                return ResponseEntity.ok().build();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.badRequest().build();
     }
 
     /*@PostMapping("/change-password/{id}")
