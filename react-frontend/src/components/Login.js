@@ -2,7 +2,6 @@ import { useState, useContext } from "react";
 import { Form, Button, Card } from "react-bootstrap";
 import { logContext } from "../App";
 import axios from "axios";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { showToastMessage } from "./ToastMessage";
 import { useNavigate } from "react-router-dom";
@@ -28,11 +27,13 @@ export default function Login() {
         .then((response) => {
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("refreshToken", response.data.refreshToken);
-          sessionStorage.setItem("id", response.data.id);
+          // sessionStorage.setItem("id", response.data.id);
           console.log(response.data);
           const decoded = jwt_decode(response.data.token);
           sessionStorage.setItem("email", decoded.sub);
-          console.log(sessionStorage.getItem("email"));
+          sessionStorage.setItem("id", decoded.user_id);
+          sessionStorage.setItem("role", decoded.role);
+          // console.log(sessionStorage.getItem("id"));
           // console.log(decoded);
           setLog("logged");
           navigate("/accountDetails");
