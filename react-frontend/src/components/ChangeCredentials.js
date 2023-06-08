@@ -1,6 +1,8 @@
 import {Button, Card, Form} from "react-bootstrap";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import axios from "axios";
+import {showToastMessage} from "./ToastMessage";
 
 export default function ChangeCredentials() {
     const [oldPassword, setOldPassword] = useState('');
@@ -10,19 +12,31 @@ export default function ChangeCredentials() {
 
     const handleChangeCredentials = async (event) => {
         event.preventDefault();
-        /*try {
+        event.preventDefault();
+        try {
+            const user_id = sessionStorage.getItem('id');
+            const url = 'http://localhost:8080/api/v1/user/change-password/' + user_id;
             const token = sessionStorage.getItem('token');
-            console.log(token);
-            await axios.post('http://localhost:8080/api/v1/user/change-password/',
-                {email, password});
-            showToastMessage('Dane logowania zostały zaktualizowane', 'success');
+
+            await axios.post(url, {
+                oldPassword: oldPassword,
+                newPassword: newPassword
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+            });
+
+
+
+            showToastMessage('Hasło zostało zaktualizowane', 'success');
         } catch (error) {
             console.error(error.message);
-            showToastMessage('Dane logowania nie zostały zaktualizowane', 'error');
+            showToastMessage('Hasło nie zostało zaktualizowane', 'error');
         } finally {
-            setEmail('');
-            setPassword('');
-        }*/
+            setOldPassword('');
+            setNewPassword('');
+        }
     };
 
     return (

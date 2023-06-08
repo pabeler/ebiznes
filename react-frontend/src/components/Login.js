@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { showToastMessage } from "./ToastMessage";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 export default function Login() {
   const { setLog } = useContext(logContext);
@@ -25,12 +26,16 @@ export default function Login() {
           password,
         })
         .then((response) => {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("refreshToken", response.data.refreshToken);
-          localStorage.setItem("id", response.data.id);
+          sessionStorage.setItem("token", response.data.token);
+          sessionStorage.setItem("refreshToken", response.data.refreshToken);
+          sessionStorage.setItem("id", response.data.id);
           console.log(response.data);
+          const decoded = jwt_decode(response.data.token);
+          sessionStorage.setItem("email", decoded.sub);
+          console.log(sessionStorage.getItem("email"));
+          // console.log(decoded);
           setLog("logged");
-          navigate("/settings");
+          navigate("/accountDetails");
           showToastMessage("Witaj " + email, "success");
         })
         .catch((error) => {
@@ -60,6 +65,7 @@ export default function Login() {
         email,
         password,
       });
+      console.log("Rejestracja powiodła się");
       showToastMessage("Rejestracja powiodła się", "success");
     } catch (error) {
       console.error(error.message);
@@ -214,7 +220,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 }
