@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Role;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.User;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.UserRepository;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.JwtService;
@@ -68,6 +69,15 @@ public class UserController {
         return ResponseEntity.ok(user);
     }
 
+    @PutMapping("/make-admin/{id}")
+    public ResponseEntity<?> makeAdmin(@PathVariable("id") Integer id) throws Exception {
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new Exception("User not found"));
+        user.setRole(Role.ADMIN);
+        userRepository.save(user);
+        return ResponseEntity.ok().build();
+    }
+
     @PostMapping("/change-password/{id}")
     public ResponseEntity<?> changePassword(@PathVariable("id") Integer id, @RequestBody String password) throws Exception {
         User user = userRepository.findById(id)
@@ -87,38 +97,4 @@ public class UserController {
         }
         return ResponseEntity.badRequest().build();
     }
-
-    /*@PostMapping("/change-password/{id}")
-    public ResponseEntity<?> changeCredentials(@PathVariable("id") Integer id, @RequestBody RegisterRequest request) throws Exception {
-        User user = userRepository.findById(id)
-                .orElseThrow(() -> new Exception("User not found"));
-        user = User.builder()
-                .id(user.getId())
-                .email(request.getEmail())
-                .password(passwordEncoder.encode(request.getPassword()))
-                .name(user.getName())
-                .second_name(user.getSecond_name())
-                .birthday(user.getBirthday())
-                .phone_number(user.getPhone_number())
-                .role(user.getRole())
-                .build();
-        userRepository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        return ResponseEntity.ok(AuthenticationResponse.builder()
-                .token(jwtToken)
-                .build());
-    }*/
-
-    /*@PostMapping("/add-user")
-    public ResponseEntity<?> addUser(@RequestBody User userRequest) {
-        User user = new User();
-        user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
-
-        //save client to database
-        userRepository.save(user);
-
-        //return success response
-        return ResponseEntity.ok().build();
-    }*/
 }
