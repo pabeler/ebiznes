@@ -27,7 +27,7 @@ function App() {
   const [log, setLog] = useState("unlogged");
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
+    const token = sessionStorage.getItem("token");
 
     if (token) {
       setLog("logged");
@@ -46,12 +46,12 @@ function App() {
             const response = await axios.post(
               "http://localhost:8080/api/v1/auth/refresh",
               {
-                refreshToken: localStorage.getItem("refreshToken"),
+                refreshToken: sessionStorage.getItem("refreshToken"),
               }
             );
             const newToken = response.data.token;
-            localStorage.setItem("token", newToken);
-            localStorage.setItem("refreshToken", response.data.refreshToken);
+            sessionStorage.setItem("token", newToken);
+            sessionStorage.setItem("refreshToken", response.data.refreshToken);
             axios.defaults.headers.common[
               "Authorization"
             ] = `Bearer ${newToken}`;
@@ -69,9 +69,9 @@ function App() {
 
   function logout() {
     // Remove tokens and user info from the local storage
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("id");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("refreshToken");
+    sessionStorage.removeItem("id");
 
     // Remove auth header for future requests
     delete axios.defaults.headers.common["Authorization"];
