@@ -1,10 +1,10 @@
-import { useState, useContext } from "react";
-import { Form, Button, Card } from "react-bootstrap";
-import { logContext } from "../App";
+import {useContext, useState} from "react";
+import {Button, Card, Form} from "react-bootstrap";
+import {logContext} from "../App";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
-import { showToastMessage } from "./ToastMessage";
-import { useNavigate } from "react-router-dom";
+import {showToastMessage} from "./ToastMessage";
+import {useNavigate} from "react-router-dom";
 import jwt_decode from "jwt-decode";
 
 export default function Login() {
@@ -37,7 +37,11 @@ export default function Login() {
           // console.log(sessionStorage.getItem("id"));
           // console.log(decoded);
           setLog(decoded.role);
-          navigate("/accountDetails");
+          if (decoded.role === "ADMIN") {
+            navigate("/add-book");
+          } else {
+            navigate("/accountDetails");
+          }
           showToastMessage("Witaj " + email, "success");
         })
         .catch((error) => {
