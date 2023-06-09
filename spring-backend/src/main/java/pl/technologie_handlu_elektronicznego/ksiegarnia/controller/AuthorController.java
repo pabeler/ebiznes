@@ -1,33 +1,32 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Author;
-import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.AuthorRepository;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.service.AuthorService;
 
-import java.util.List;
+import java.util.Optional;
 
 @RestController
-@RequestMapping("/api/v1/author")
-@RequiredArgsConstructor
+@RequestMapping("/api/v1/authors")
+@AllArgsConstructor
 @CrossOrigin(origins = "http://localhost:3000")
+
 
 public class AuthorController {
 
-    @Autowired
-    private AuthorRepository authorRepository;
+    private final AuthorService authorService;
 
     @PostMapping("/add-author")
     public ResponseEntity<?> addAuthor(@RequestBody Author authorRequest) {
         //create new author
         Author author = new Author();
         author.setName(authorRequest.getName());
-        author.setSecond_name(authorRequest.getSecond_name());
 
         //save author to database
-        authorRepository.save(author);
+        authorService.save(author);
 
         //return success response
         return ResponseEntity.ok().build();
@@ -35,12 +34,12 @@ public class AuthorController {
 
     @DeleteMapping("/delete-author/{id}")
     public ResponseEntity<?> deleteAuthor(@PathVariable("id") Integer id) throws Exception {
-        Author author = authorRepository.findById(id)
+        Author author = authorService.findById(id)
                 .orElseThrow(() -> new Exception("Author not found"));
 
 
         // delete author from database
-        authorRepository.delete(author);
+        authorService.delete(author);
 
         // return success response
         return ResponseEntity.ok().build();
@@ -49,30 +48,26 @@ public class AuthorController {
     @PutMapping("/update-author/{id}")
     public ResponseEntity<?> updateAuthor(@PathVariable("id") Integer id, @RequestBody Author authorRequest) throws Exception {
         // find author by id
-        Author author = authorRepository.findById(id)
+        Author author = authorService.findById(id)
                 .orElseThrow(() -> new Exception("Author not found"));
 
         // update author fields
         author.setName(authorRequest.getName());
-        author.setSecond_name(authorRequest.getSecond_name());
 
         // save author to database
-        authorRepository.save(author);
+        authorService.save(author);
 
         // return success response
         return ResponseEntity.ok().build();
     }
+    @GetMapping
+    public Author getAuthorByName(@RequestParam String name) {
+        Optional<Author> author = authorService.findByName(name);
+        return author.orElse(null);
+    }
 
-    @GetMapping("/get-authors")
-    public List<Author> getAllEmployees() {
-        return authorRepository.findAll();
+    @PostMapping
+    public Author createAuthor(@RequestBody Author author) {
+        return authorService.save(author);
     }
 }
-
-
-/*
-@PostMapping("/employees")
-    public Employee createEmployee(@Valid @RequestBody Employee employee) {
-        return employeeRepository.save(employee);
-    }
- */

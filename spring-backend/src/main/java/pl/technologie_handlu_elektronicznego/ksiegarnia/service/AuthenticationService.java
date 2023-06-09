@@ -13,7 +13,12 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.UserRepositor
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.AuthenticationRequest;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.AuthenticationResponse;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.JwtService;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.token.Token;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.token.TokenRepository;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.token.TokenType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Slf4j
 @Service
@@ -33,8 +38,11 @@ public class AuthenticationService {
                 .build();
         repository.save(user);
         var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        saveRefreshToken(refreshToken, user);  // save refresh token
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .refreshToken(refreshToken)
                 .build();
     }
 
@@ -49,65 +57,49 @@ public class AuthenticationService {
         } catch (Exception e) {
             log.info(e.getMessage());
         }
-//        log.info("Test");
         var user = repository.findByEmail(request.getEmail())
                 .orElseThrow();
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
             throw new RuntimeException("Invalid password");
-        var jwtToken = jwtService.generateToken(user);
+        Map<String, Object> additionalClaims = new HashMap<>();
+        additionalClaims.put("role", user.getRole().toString());
+        additionalClaims.put("user_id", user.getId().toString());
+        var jwtToken = jwtService.generateToken(additionalClaims, user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        saveRefreshToken(refreshToken, user);  // save refresh token
         return AuthenticationResponse.builder()
                 .token(jwtToken)
+                .refreshToken(refreshToken)
+                .build();
+    }
+
+    private void saveRefreshToken(String token, User user) {
+        Token refreshToken = new Token();
+        refreshToken.setToken(token);
+        refreshToken.setUser(user);
+        refreshToken.setTokenType(TokenType.REFRESH);
+        tokenRepository.save(refreshToken);
+    }
+    public AuthenticationResponse refreshToken(String oldRefreshToken) {
+        var oldTokenOptional = tokenRepository.findByToken(oldRefreshToken);
+        if (oldTokenOptional.isEmpty()) {
+            throw new RuntimeException("Invalid refresh token");
+        }
+        var oldToken = oldTokenOptional.get();
+        if (oldToken.isExpired() || oldToken.isRevoked()) {
+            throw new RuntimeException("Invalid refresh token");
+        }
+        var user = oldToken.getUser();
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        oldToken.setRevoked(true);
+        tokenRepository.save(oldToken);  // revoke old refresh token
+        saveRefreshToken(refreshToken, user);  // save new refresh token
+        return AuthenticationResponse.builder()
+                .token(jwtToken)
+                .refreshToken(refreshToken)
                 .id(user.getId())
                 .build();
     }
 
-//    private void saveUserToken(User user, String jwtToken) {
-//        var token = Token.builder()
-//                .user(user)
-//                .token(jwtToken)
-//                .tokenType(TokenType.BEARER)
-//                .expired(false)
-//                .revoked(false)
-//                .build();
-//        tokenRepository.save(token);
-//    }
-//
-//    private void revokeAllUserTokens(User user) {
-//        var validUserTokens = tokenRepository.findAllValidTokenByUser(user.getId());
-//        if (validUserTokens.isEmpty())
-//            return;
-//        validUserTokens.forEach(token -> {
-//            token.setExpired(true);
-//            token.setRevoked(true);
-//        });
-//        tokenRepository.saveAll(validUserTokens);
-//    }
-//
-//    public void refreshToken(
-//            HttpServletRequest request,
-//            HttpServletResponse response
-//    ) throws IOException {
-//        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
-//        final String refreshToken;
-//        final String userEmail;
-//        if (authHeader == null ||!authHeader.startsWith("Bearer ")) {
-//            return;
-//        }
-//        refreshToken = authHeader.substring(7);
-//        userEmail = jwtService.extractUsername(refreshToken);
-//        if (userEmail != null) {
-//            var user = this.repository.findByEmail(userEmail)
-//                    .orElseThrow();
-//            if (jwtService.isTokenValid(refreshToken, user)) {
-//                var accessToken = jwtService.generateToken(user);
-//                revokeAllUserTokens(user);
-//                saveUserToken(user, accessToken);
-//                var authResponse = AuthenticationResponse.builder()
-//                        .accessToken(accessToken)
-//                        .refreshToken(refreshToken)
-//                        .build();
-//                new ObjectMapper().writeValue(response.getOutputStream(), authResponse);
-//            }
-//        }
-//    }
 }

@@ -23,6 +23,15 @@ public class Book {
     @Column(name = "title")
     private String title;
 
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "image_url")
+    private String image_url;
+
     @Column(name = "price")
     private Float price;
 
@@ -39,11 +48,7 @@ public class Book {
 
     @OneToOne
     @JoinColumn(name = "publisher_id", referencedColumnName = "id")
-    private Publisher publishers;
-
-
-    @Column(name = "image_url")
-    private String image_url;
+    private Publisher publisher;
 
     @ManyToMany
     @JoinTable(name = "`books_authors`",
@@ -55,5 +60,4 @@ public class Book {
     @OneToMany(mappedBy = "book")
     @JsonIgnore
     private Set<OrderDetail> orderDetails;
-
 }
