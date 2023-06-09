@@ -36,7 +36,7 @@ export default function Login() {
           // alert(sessionStorage.getItem("role"));
           // console.log(sessionStorage.getItem("id"));
           // console.log(decoded);
-          setLog("logged");
+          setLog(decoded.role);
           navigate("/accountDetails");
           showToastMessage("Witaj " + email, "success");
         })

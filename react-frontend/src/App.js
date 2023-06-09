@@ -11,11 +11,9 @@ import Services from './components/Services';
 import Blogs from './components/Blogs'
 import Basket from "./components/Basket";
 import axios from "axios";
-import {
-    BrowserRouter, Route, Routes
-} from "react-router-dom";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Login from "./components/Login";
-import { useState, useEffect, createContext } from "react";
+import {createContext, useEffect, useState} from "react";
 import ChangeCredentials from "./components/ChangeCredentials";
 import AccountDetails from "./components/AccountDetails";
 import {ToastContainer} from "react-toastify";
@@ -30,8 +28,11 @@ function App() {
     const token = sessionStorage.getItem("token");
 
     if (token) {
-      setLog("logged");
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+        const role = sessionStorage.getItem("role");
+        if (role) {
+            setLog(role);
+        }
+        axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
     } else {
       setLog("unlogged");
     }
