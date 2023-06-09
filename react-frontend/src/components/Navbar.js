@@ -11,14 +11,14 @@ export default function Navbar() {
     //Narazie jest xl, potem można zmienić że składa się kiedy jest mniejszy ekran
     <nav className="navbar navbar-expand-xl ">
       <div className="container-fluid">
-        <a className="navbar-brand" href="http://localhost:3000/">
+        <Link to="/" className="navbar-brand">
           <img
             className="d-inline-block align-text nav--logo"
             src="images\logo.png"
             alt="logo"
           />
           Księgarnia
-        </a>
+        </Link>
         <button
           className="navbar-toggler"
           type="button"
@@ -33,27 +33,24 @@ export default function Navbar() {
         <div className="collapse navbar-collapse" id="navbarXl">
           <ul className="navbar-nav ms-auto text-align-center">
             <li className="nav-item nav-item_text mt-auto mb-auto me-2 ">
-              <a
-                className="nav-link nav--menu_item"
-                href="http://localhost:3000/"
-              >
+              <Link to="/" className="nav-link nav--menu_item">
                 Strona Główna
-              </a>
+              </Link>
             </li>
             <li className="nav-item nav-item_text mt-auto mb-auto me-2 ">
-              <a className="nav-link" href="http://localhost:3000/shop">
+              <Link to="/shop" className="nav-link">
                 Sklep
-              </a>
+              </Link>
             </li>
             <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-              <a className="nav-link" href="http://localhost:3000/aboutus">
+              <Link to="/aboutus" className="nav-link">
                 O nas
-              </a>
+              </Link>
             </li>
             <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-              <a className="nav-link" href="http://localhost:3000/contact">
+              <Link to="/contact" className="nav-link">
                 Kontakt
-              </a>
+              </Link>
             </li>
             <li className="nav-item mt-auto mb-auto me-2">
               {log === "unlogged" ? (
@@ -67,9 +64,9 @@ export default function Navbar() {
               )}
             </li>
             <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-              <a className="nav-link" href="http://localhost:3000/basket">
+              <Link to="/cart" className="nav-link">
                 <BasketIcon />
-              </a>
+              </Link>
             </li>
           </ul>
         </div>

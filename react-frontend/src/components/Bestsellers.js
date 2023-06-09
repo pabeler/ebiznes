@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Book from "./Book";
 import "./Home.css";
 
 const Bestsellers = () => {
+  const [books, setBooks] = useState([]);
+
+  useEffect(() => {
+    const fetchBooks = async () => {
+      try {
+        const response = await axios.get("http://localhost:8080/api/v1/books");
+        console.log(response.data);
+        setBooks(response.data);
+      } catch (error) {
+        console.error("Nie udało się pobrać książek bestsellerów", error);
+      }
+    };
+
+    fetchBooks();
+  }, []);
+
   return (
     <div id="products" className="products">
       <div className="row">
@@ -16,10 +33,12 @@ const Bestsellers = () => {
       </div>
       <div className="row">
         {/* Example usage of Book component */}
-        <Book title="Hobbit" />
-        <Book title="Przędza. W poszukiwaniu wewnętrznej wolności." />
-        <Book title="Dziewczyny z Dubaju. Tajemnice arabskich księżniczek." />
-        <Book title="babcia opowiadała mi bajki. Tom 1. Baśnie polskie." />
+        {/* Tutaj można zrobić potem sortowanie po najczęściej kupowanych książkach */}
+        <div className="row">
+          {books.slice(0, 4).map((book) => (
+            <Book title={book.title} />
+          ))}
+        </div>
         {/* Repeat the above Book component with different props for other bestseller books */}
       </div>
       {/* Rest of the code */}

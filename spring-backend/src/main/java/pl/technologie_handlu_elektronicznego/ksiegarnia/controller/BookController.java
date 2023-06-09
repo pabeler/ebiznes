@@ -45,6 +45,7 @@ public class BookController {
     public Book updateBook(@PathVariable Integer id, @RequestBody Book book) {
         return bookService.updateBook(id, book);
     }
+    @CrossOrigin(origins = "http://localhost:3000")
     @PostMapping("/add-book")
     public Book addBook(@RequestBody Book book) {
         return bookService.addBook(book);

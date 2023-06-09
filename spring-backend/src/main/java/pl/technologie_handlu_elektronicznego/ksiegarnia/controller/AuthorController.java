@@ -12,6 +12,8 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/v1/authors")
 @AllArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
+
 
 public class AuthorController {
 

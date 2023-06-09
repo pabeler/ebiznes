@@ -25,9 +25,9 @@ export default function Login() {
           password,
         })
         .then((response) => {
-          localStorage.setItem("token", response.data.token);
-          localStorage.setItem("refreshToken", response.data.refreshToken);
-          localStorage.setItem("id", response.data.id);
+          sessionStorage.setItem("token", response.data.token);
+          sessionStorage.setItem("refreshToken", response.data.refreshToken);
+          sessionStorage.setItem("id", response.data.id);
           console.log(response.data);
           setLog("logged");
           navigate("/settings");

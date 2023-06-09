@@ -44,18 +44,9 @@ public class BookService {
     }
 
     public Book addBook(Book book) {
-        Book bookToAdd = new Book();
-        bookToAdd.setTitle(book.getTitle());
-        bookToAdd.setAuthors(book.getAuthors());
-        bookToAdd.setPublisher(book.getPublisher());
-        bookToAdd.setDescription(book.getDescription());
-        bookToAdd.setCategories(book.getCategories());
-        bookToAdd.setQuantity(book.getQuantity());
-        bookToAdd.setPrice(book.getPrice());
-        bookToAdd.setImage_url(book.getImage_url());
-
         return bookRepository.save(book);
     }
+
 
     public List<Book> getBooksByTitle(String title) {
         return bookRepository.findByTitle(title);
