@@ -17,6 +17,9 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.token.Token;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.token.TokenRepository;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.token.TokenType;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -58,13 +61,15 @@ public class AuthenticationService {
                 .orElseThrow();
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword()))
             throw new RuntimeException("Invalid password");
-        var jwtToken = jwtService.generateToken(user);
+        Map<String, Object> additionalClaims = new HashMap<>();
+        additionalClaims.put("role", user.getRole().toString());
+        additionalClaims.put("user_id", user.getId().toString());
+        var jwtToken = jwtService.generateToken(additionalClaims, user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveRefreshToken(refreshToken, user);  // save refresh token
         return AuthenticationResponse.builder()
                 .token(jwtToken)
                 .refreshToken(refreshToken)
-                .id(user.getId())
                 .build();
     }
 

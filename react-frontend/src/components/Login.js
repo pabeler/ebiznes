@@ -1,11 +1,11 @@
-import { useState, useContext } from "react";
-import { Form, Button, Card } from "react-bootstrap";
+import { useContext, useState } from "react";
+import { Button, Card, Form } from "react-bootstrap";
 import { logContext } from "../App";
 import axios from "axios";
-import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { showToastMessage } from "./ToastMessage";
 import { useNavigate } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 
 export default function Login() {
   const { setLog } = useContext(logContext);
@@ -27,10 +27,21 @@ export default function Login() {
         .then((response) => {
           sessionStorage.setItem("token", response.data.token);
           sessionStorage.setItem("refreshToken", response.data.refreshToken);
-          sessionStorage.setItem("id", response.data.id);
+          // sessionStorage.setItem("id", response.data.id);
           console.log(response.data);
-          setLog("logged");
-          navigate("/settings");
+          const decoded = jwt_decode(response.data.token);
+          sessionStorage.setItem("email", decoded.sub);
+          sessionStorage.setItem("id", decoded.user_id);
+          sessionStorage.setItem("role", decoded.role);
+          // alert(sessionStorage.getItem("role"));
+          // console.log(sessionStorage.getItem("id"));
+          // console.log(decoded);
+          setLog(decoded.role);
+          if (decoded.role === "ADMIN") {
+            navigate("/add-book");
+          } else {
+            navigate("/accountDetails");
+          }
           showToastMessage("Witaj " + email, "success");
         })
         .catch((error) => {
@@ -60,7 +71,9 @@ export default function Login() {
         email,
         password,
       });
+      console.log("Rejestracja powiodła się");
       showToastMessage("Rejestracja powiodła się", "success");
+      goToLogin(event);
     } catch (error) {
       console.error(error.message);
       showToastMessage("Rejestracja nie powiodła się", "error");
@@ -70,11 +83,11 @@ export default function Login() {
     }
   };
 
-  const goToResetPassword = (event) => {
+  /*const goToResetPassword = (event) => {
     event.preventDefault();
     setShowLoginForm(false);
     setShowForgotPassword(true);
-  };
+  };*/
 
   const goToRegistration = (event) => {
     event.preventDefault();
@@ -129,9 +142,9 @@ export default function Login() {
                       Zaloguj
                     </Button>
 
-                    <Button variant="link" onClick={goToResetPassword}>
+                    {/*<Button variant="link" onClick={goToResetPassword}>
                       Zapomniałeś hasła?
-                    </Button>
+                    </Button>*/}
 
                     <Button variant="link" onClick={goToRegistration}>
                       Rejestracja
@@ -214,7 +227,6 @@ export default function Login() {
           </div>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 }
