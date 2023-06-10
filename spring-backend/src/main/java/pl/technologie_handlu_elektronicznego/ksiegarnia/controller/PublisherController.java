@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Publisher;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.service.PublisherService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -14,6 +15,10 @@ import java.util.Optional;
 public class PublisherController {
     private final PublisherService publisherService;
 
+    @GetMapping("/all")
+    public List<Publisher> getAllPublishers() {
+        return publisherService.findAll();
+    }
     @GetMapping("/publishers")
     public Publisher getPublisherByName(@RequestParam String name) {
         Optional<Publisher> publisher = publisherService.findByName(name);

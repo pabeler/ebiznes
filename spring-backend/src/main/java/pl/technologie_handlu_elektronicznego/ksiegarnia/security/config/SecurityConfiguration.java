@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                 .permitAll()
                 .requestMatchers("/api/v1/books/**")
                 .permitAll()
-                .requestMatchers("/api/v1/category/**")
+                .requestMatchers("/api/v1/categories/**")
                 .permitAll()
                 .anyRequest()
                 .authenticated()

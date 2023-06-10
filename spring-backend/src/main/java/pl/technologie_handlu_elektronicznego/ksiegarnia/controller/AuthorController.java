@@ -1,12 +1,12 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Author;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.service.AuthorService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -59,6 +59,10 @@ public class AuthorController {
 
         // return success response
         return ResponseEntity.ok().build();
+    }
+    @GetMapping("/all")
+    public List<Author> getAllAuthors() {
+        return authorService.findAll();
     }
     @GetMapping
     public Author getAuthorByName(@RequestParam String name) {

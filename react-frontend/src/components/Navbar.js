@@ -65,11 +65,7 @@ export default function Navbar() {
                 )}
               </li>
               <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-                <Link
-                  to="/cart"
-                  className="nav-link"
-                  href="http://localhost:3000/basket"
-                >
+                <Link to="/cart" className="nav-link">
                   <BasketIcon />
                 </Link>
               </li>
@@ -78,7 +74,7 @@ export default function Navbar() {
         </div>
       ) : (
         <div className="container-fluid">
-          <Link to={"/"} className="navbar-brand" href="http://localhost:3000/">
+          <Link to={"/"} className="navbar-brand">
             <img
               className="d-inline-block align-text nav--logo"
               src="images\logo.png"

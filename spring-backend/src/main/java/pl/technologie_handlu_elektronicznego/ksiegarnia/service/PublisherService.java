@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Publisher;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.PublisherRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,5 +20,9 @@ public class PublisherService {
 
     public Publisher save(Publisher publisher) {
         return publisherRepository.save(publisher);
+    }
+
+    public List<Publisher> findAll() {
+        return publisherRepository.findAll();
     }
 }

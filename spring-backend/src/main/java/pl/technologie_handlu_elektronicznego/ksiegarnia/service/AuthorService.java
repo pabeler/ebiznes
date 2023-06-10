@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Author;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.AuthorRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,5 +26,9 @@ public class AuthorService {
 
     public void delete(Author author) {
         authorRepository.delete(author);
+    }
+
+    public List<Author> findAll() {
+        return authorRepository.findAll();
     }
 }
