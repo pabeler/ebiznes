@@ -24,6 +24,10 @@ export default function AddBook() {
   const [publishers, setPublishers] = useState([]);
   const [inputValueAuthor, setInputValueAuthor] = useState("");
   const [inputValueCategory, setInputValueCategory] = useState("");
+  const [bookImage, setBookImage] = useState(null);
+  const handleImageChange = (e) => {
+    setBookImage(URL.createObjectURL(e.target.files[0]));
+  };
 
   useEffect(() => {
     const fetchAuthors = async () => {
@@ -57,9 +61,42 @@ export default function AddBook() {
 
     try {
       console.log("Adding book: ", book);
+      if (bookImage) {
+        book.image_url = bookImage;
+      }
       await axios.post("http://localhost:8080/api/v1/books/add-book", book);
     } catch (error) {
       console.error("Error adding book: ", error);
+    }
+  };
+
+  const handleGoogleApi = async () => {
+    const googleBooksApiUrl = `https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(
+      book.title
+    )}&maxResults=1`;
+
+    try {
+      const response = await axios.get(googleBooksApiUrl);
+
+      if (response.data.items && response.data.items.length > 0) {
+        const data = response.data.items[0].volumeInfo;
+
+        setBook({
+          ...book,
+          authors: data.authors
+            ? data.authors.map((author) => ({ name: author }))
+            : [],
+          description: data.description || "",
+          categories: data.categories
+            ? data.categories.map((category) => ({ name: category }))
+            : [],
+          image_url: data.imageLinks ? data.imageLinks.thumbnail : "",
+          publisher: data.publisher ? { name: data.publisher } : "",
+        });
+        console.log("Book: ", book);
+      }
+    } catch (error) {
+      console.error("Error getting data from Google API: ", error);
     }
   };
 
@@ -74,6 +111,7 @@ export default function AddBook() {
                 <Form.Group controlId="formTitle">
                   <Form.Label>Tytuł</Form.Label>
                   <Form.Control
+                    required
                     type="text"
                     placeholder="Tytuł"
                     value={book.title}
@@ -87,6 +125,7 @@ export default function AddBook() {
                   <Autocomplete
                     multiple
                     freeSolo
+                    value={book.authors}
                     options={authors}
                     getOptionLabel={(option) => {
                       // jeżeli opcja jest ciągiem znaków (wprowadzona ręcznie), zwróć ją bezpośrednio
@@ -147,6 +186,7 @@ export default function AddBook() {
                   <Form.Label>Wydawca</Form.Label>
                   <Autocomplete
                     freeSolo
+                    value={book.publisher}
                     options={publishers}
                     getOptionLabel={(option) => {
                       // jeżeli opcja jest ciągiem znaków (wprowadzona ręcznie), zwróć ją bezpośrednio
@@ -211,6 +251,7 @@ export default function AddBook() {
                   <Form.Label>Kategorie</Form.Label>
                   <Autocomplete
                     multiple
+                    value={book.categories}
                     freeSolo
                     options={categories}
                     getOptionLabel={(option) => {
@@ -269,16 +310,22 @@ export default function AddBook() {
                   />
                 </Form.Group>
                 <Form.Group controlId="formImage">
-                  <Form.Label>Obrazek</Form.Label>
+                  <Form.Label>Obrazek URL</Form.Label>
                   <Form.Control
                     type="text"
-                    placeholder="Obrazek"
+                    placeholder="Obrazek URL"
                     value={book.image_url}
                     onChange={(e) =>
                       setBook({ ...book, image_url: e.target.value })
                     }
                   />
+                  <img
+                    src={book.image_url}
+                    alt="Preview"
+                    style={{ width: "127px", height: "193px" }}
+                  />
                 </Form.Group>
+
                 <Form.Group controlId="formPrice">
                   <Form.Label>Cena</Form.Label>
                   <Form.Control
@@ -303,6 +350,13 @@ export default function AddBook() {
                 </Form.Group>
                 <Button variant="primary" type="submit">
                   Dodaj
+                </Button>
+                <Button
+                  variant="secondary"
+                  type="button"
+                  onClick={handleGoogleApi}
+                >
+                  Dodaj z Google API
                 </Button>
               </Form>
             </Card.Body>
