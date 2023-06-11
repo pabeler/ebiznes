@@ -14,8 +14,7 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.BookRepositor
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.CategoryRepository;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.PublisherRepository;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,16 +44,59 @@ public class BookService {
 
     public Book updateBook(Integer id, Book book) {
         Book bookToUpdate = bookRepository.findById(id).orElseThrow();
+
+        // Sprawdź czy wydawca już istnieje w bazie danych
+        Optional<Publisher> existingPublisher = publisherRepository.findByName(book.getPublisher().getName());
+        if (existingPublisher.isPresent()) {
+            bookToUpdate.setPublisher(existingPublisher.get());
+        } else {
+            Publisher newPublisher = new Publisher();
+            newPublisher.setName(book.getPublisher().getName());
+            publisherRepository.save(newPublisher);
+            bookToUpdate.setPublisher(newPublisher);
+        }
+
+        // Aktualizuj autorów
+        // Aktualizuj autorów
+        Set<Author> existingAuthors = new HashSet<>();
+        for (Author author : book.getAuthors()) {
+            Optional<Author> existingAuthor = authorRepository.findByName(author.getName());
+            if (existingAuthor.isPresent()) {
+                existingAuthors.add(existingAuthor.get());
+            } else {
+                Author newAuthor = new Author();
+                newAuthor.setName(author.getName());
+                authorRepository.save(newAuthor);
+                existingAuthors.add(newAuthor);
+            }
+        }
+        bookToUpdate.setAuthors(existingAuthors);
+
+        // Aktualizuj kategorie
+        Set<Category> existingCategories = new HashSet<>();
+        for (Category category : book.getCategories()) {
+            Optional<Category> existingCategory = categoryRepository.findByName(category.getName());
+            if (existingCategory.isPresent()){
+                existingCategories.add(existingCategory.get());
+            } else {
+                Category newCategory = new Category();
+                newCategory.setName(category.getName());
+                categoryRepository.save(newCategory);
+                existingCategories.add(newCategory);
+            }
+        }
+        bookToUpdate.setCategories(existingCategories);
+
+        // Aktualizuj pozostałe dane książki
         bookToUpdate.setTitle(book.getTitle());
-        bookToUpdate.setAuthors(book.getAuthors());
-        bookToUpdate.setPublisher(book.getPublisher());
         bookToUpdate.setDescription(book.getDescription());
-        bookToUpdate.setCategories(book.getCategories());
         bookToUpdate.setQuantity(book.getQuantity());
         bookToUpdate.setPrice(book.getPrice());
         bookToUpdate.setImage_url(book.getImage_url());
+
         return bookRepository.save(bookToUpdate);
     }
+
 
     public ResponseEntity<String> addBook(Book book) {
 

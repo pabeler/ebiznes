@@ -109,6 +109,11 @@ export default function Navbar() {
                   Dodaj książkę
                 </Link>
               </li>
+              <li className="nav-item nav-item_text mt-auto mb-auto me-2 ">
+                <Link to="/edit-book" className="nav-link">
+                  Edytuj książkę
+                </Link>
+              </li>
               <li className="nav-item mt-auto mb-auto me-2">
                 <div>
                   <MyProfile />

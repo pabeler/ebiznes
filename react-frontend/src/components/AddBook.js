@@ -103,6 +103,18 @@ export default function AddBook() {
         });
 
         console.log("Book: ", book);
+      } else {
+        toast.error("Nie znaleziono książki w api", book.title);
+        setBook({
+          title: "",
+          authors: [],
+          description: "",
+          categories: [],
+          image_url: "",
+          price: "",
+          quantity: "",
+          publisher: "",
+        });
       }
     } catch (error) {
       console.error("Error getting data from Google API: ", error);
@@ -332,7 +344,11 @@ export default function AddBook() {
                     }
                   />
                   <img
-                    src={book.image_url || "/images/blank.png"}
+                    src={
+                      book.image_url !== ""
+                        ? book.image_url
+                        : "images/blank.png"
+                    }
                     alt="Preview"
                     style={{ width: "127px", height: "193px" }}
                   />

@@ -58,15 +58,4 @@ public class Book {
     @OneToMany(mappedBy = "book")
     @JsonIgnore
     private Set<OrderDetail> orderDetails;
-
-
-    public void addCategory(Category category) {
-        this.categories.add(category);
-        category.getBooks().add(this);
-    }
-
-    public void addAuthor(Author author) {
-        this.authors.add(author);
-        author.getBooks().add(this);
-    }
 }
