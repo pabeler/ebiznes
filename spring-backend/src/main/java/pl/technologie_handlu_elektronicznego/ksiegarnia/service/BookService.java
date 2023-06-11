@@ -2,6 +2,8 @@ package pl.technologie_handlu_elektronicznego.ksiegarnia.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.data.repository.query.Param;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Author;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Book;
@@ -54,7 +56,13 @@ public class BookService {
         return bookRepository.save(bookToUpdate);
     }
 
-    public Book addBook(Book book) {
+    public ResponseEntity<String> addBook(Book book) {
+
+        List<Book> existingBooks = bookRepository.findByTitle(book.getTitle());
+        if (!existingBooks.isEmpty()) {
+            return new ResponseEntity<>("BOOK_ALREADY_EXISTS", HttpStatus.CONFLICT);
+        }
+
         Set<Author> authors = book.getAuthors().stream().map(author -> {
             Author existingAuthor = authorRepository.findByName(author.getName()).orElse(null);
             return existingAuthor != null ? existingAuthor : authorRepository.save(author);
@@ -74,8 +82,11 @@ public class BookService {
         book.setCategories(categories);
         book.setPublisher(publisher);
 
-        return bookRepository.save(book);
+        bookRepository.save(book);
+
+        return new ResponseEntity<>("BOOK_ADDED", HttpStatus.CREATED);
     }
+
 
 
 

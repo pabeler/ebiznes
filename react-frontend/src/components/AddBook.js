@@ -4,7 +4,8 @@ import Box from "@mui/material/Box";
 import axios from "axios";
 import { Autocomplete, createFilterOptions } from "@mui/material";
 import TextField from "@mui/material/TextField";
-
+import "react-toastify/dist/ReactToastify.css";
+import { toast } from "react-toastify";
 export default function AddBook() {
   const filter = createFilterOptions();
 
@@ -24,10 +25,6 @@ export default function AddBook() {
   const [publishers, setPublishers] = useState([]);
   const [inputValueAuthor, setInputValueAuthor] = useState("");
   const [inputValueCategory, setInputValueCategory] = useState("");
-  const [bookImage, setBookImage] = useState(null);
-  const handleImageChange = (e) => {
-    setBookImage(URL.createObjectURL(e.target.files[0]));
-  };
 
   useEffect(() => {
     const fetchAuthors = async () => {
@@ -61,12 +58,21 @@ export default function AddBook() {
 
     try {
       console.log("Adding book: ", book);
-      if (bookImage) {
-        book.image_url = bookImage;
-      }
       await axios.post("http://localhost:8080/api/v1/books/add-book", book);
+      toast.success("Książka została dodana", book.title);
+      setBook({
+        title: "",
+        authors: [],
+        description: "",
+        categories: [],
+        image_url: "",
+        price: "",
+        quantity: "",
+        publisher: "",
+      });
     } catch (error) {
       console.error("Error adding book: ", error);
+      toast.error("Błąd podczas dodawania książki", book.title);
     }
   };
 
@@ -90,9 +96,12 @@ export default function AddBook() {
           categories: data.categories
             ? data.categories.map((category) => ({ name: category }))
             : [],
-          image_url: data.imageLinks ? data.imageLinks.thumbnail : "",
+          image_url: data.imageLinks
+            ? data.imageLinks.thumbnail
+            : "/images/blank.png",
           publisher: data.publisher ? { name: data.publisher } : "",
         });
+
         console.log("Book: ", book);
       }
     } catch (error) {
@@ -123,6 +132,7 @@ export default function AddBook() {
                 <Form.Group controlId="formAuthor">
                   <Form.Label>Autorzy</Form.Label>
                   <Autocomplete
+                    required
                     multiple
                     freeSolo
                     value={book.authors}
@@ -185,6 +195,7 @@ export default function AddBook() {
                 <Form.Group controlId="formPublisher">
                   <Form.Label>Wydawca</Form.Label>
                   <Autocomplete
+                    required
                     freeSolo
                     value={book.publisher}
                     options={publishers}
@@ -250,6 +261,7 @@ export default function AddBook() {
                 <Form.Group controlId="formCategory">
                   <Form.Label>Kategorie</Form.Label>
                   <Autocomplete
+                    required
                     multiple
                     value={book.categories}
                     freeSolo
@@ -320,7 +332,7 @@ export default function AddBook() {
                     }
                   />
                   <img
-                    src={book.image_url}
+                    src={book.image_url || "/images/blank.png"}
                     alt="Preview"
                     style={{ width: "127px", height: "193px" }}
                   />
@@ -329,6 +341,7 @@ export default function AddBook() {
                 <Form.Group controlId="formPrice">
                   <Form.Label>Cena</Form.Label>
                   <Form.Control
+                    required
                     type="text"
                     placeholder="Cena"
                     value={book.price}
@@ -340,6 +353,7 @@ export default function AddBook() {
                 <Form.Group controlId="formQuantity">
                   <Form.Label>Ilość</Form.Label>
                   <Form.Control
+                    required
                     type="text"
                     placeholder="Ilość"
                     value={book.quantity}
