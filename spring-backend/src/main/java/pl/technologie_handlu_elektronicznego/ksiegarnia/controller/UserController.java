@@ -4,14 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Role;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.User;
-import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.UserRepository;
-import pl.technologie_handlu_elektronicznego.ksiegarnia.security.config.JwtService;
+import pl.technologie_handlu_elektronicznego.ksiegarnia.service.UserService;
 
 import java.util.List;
 
@@ -23,64 +21,63 @@ import java.util.List;
 
 public class UserController {
     private final PasswordEncoder passwordEncoder;
-    private final JwtService jwtService;
 
-    @Autowired
-    UserRepository userRepository;
+    public final UserService userService;
+
 
     @GetMapping("/get-all-users")
     public List<User> getClients(){
-        return userRepository.findAll();
+        return userService.findAll();
     }
 
     @PutMapping("/update-user/{id}")
     public ResponseEntity<?> updateUserData(@PathVariable("id") Integer id, @RequestBody User userRequest) throws Exception {
-        User user = userRepository.findById(id)
+        User user = userService.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
         user.setName(userRequest.getName());
         user.setSecond_name(userRequest.getSecond_name());
         user.setBirthday(userRequest.getBirthday());
         user.setPhone_number(userRequest.getPhone_number());
-        userRepository.save(user);
+        userService.save(user);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/update-user-address/{id}")
     public ResponseEntity<?> updateUserAddress(@PathVariable("id") Integer id, @RequestBody User userRequest) throws Exception {
-        User user = userRepository.findById(id)
+        User user = userService.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
         user.setAddress(userRequest.getAddress());
-        userRepository.save(user);
+        userService.save(user);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/delete-user/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Integer id) throws Exception {
-        User user = userRepository.findById(id)
+        User user = userService.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
-        userRepository.delete(user);
+        userService.delete(user);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/get-user/{id}")
     public ResponseEntity<?> getUser(@PathVariable("id") Integer id) throws Exception {
-        User user = userRepository.findById(id)
+        User user = userService.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
         return ResponseEntity.ok(user);
     }
 
     @PutMapping("/make-admin/{id}")
     public ResponseEntity<?> makeAdmin(@PathVariable("id") Integer id) throws Exception {
-        User user = userRepository.findById(id)
+        User user = userService.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
         user.setRole(Role.ADMIN);
-        userRepository.save(user);
+        userService.save(user);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/change-password/{id}")
     public ResponseEntity<?> changePassword(@PathVariable("id") Integer id, @RequestBody String password) throws Exception {
-        User user = userRepository.findById(id)
+        User user = userService.findById(id)
                 .orElseThrow(() -> new Exception("User not found"));
         try {
             ObjectMapper objectMapper = new ObjectMapper();
@@ -89,7 +86,7 @@ public class UserController {
             String newPassword = jsonNode.get("newPassword").asText();
             if (passwordEncoder.matches(oldPassword, user.getPassword())) {
                 user.setPassword(passwordEncoder.encode(newPassword));
-                userRepository.save(user);
+                userService.save(user);
                 return ResponseEntity.ok().build();
             }
         } catch (Exception e) {

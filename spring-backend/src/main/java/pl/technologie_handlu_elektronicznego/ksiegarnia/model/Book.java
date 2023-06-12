@@ -1,11 +1,14 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -37,7 +40,7 @@ public class Book {
 
     @OneToMany(mappedBy = "book")
     @JsonIgnore
-    private Set<Review> reviews;
+    private List<Review> reviews;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(name = "`books_categories`",

@@ -14,11 +14,19 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     @Column(name = "description")
     private String description;
 
-    //tu tak samo bez kaksady, bo usuniemy review to nam wywali książke
+    @Enumerated(EnumType.STRING)
+    @Column(name = "rating")
+    private Rating rating;
+
     @ManyToOne
     @JoinColumn(name = "book_id", referencedColumnName = "id")
     private Book book;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 }

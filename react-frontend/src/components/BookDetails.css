@@ -1,0 +1,15 @@
+.review {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  .review h4 {
+    margin: 0;
+    font-size: 1.2em;
+  }
+  
+  .review p {
+    margin: 5px 0;
+  }
+  

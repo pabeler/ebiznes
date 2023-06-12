@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import axios from "axios";
 import "./Home.css";
 import CartContext from "../CartContext";
+import { useNavigate } from "react-router-dom";
 
 const Book = ({ title }) => {
+  const navigate = useNavigate();
   const { cart, setCart } = useContext(CartContext);
   const [id, setId] = useState(10);
   const [image_url, setImageUrl] = useState("");
@@ -37,102 +39,6 @@ const Book = ({ title }) => {
       console.error("Error fetching books:", error);
     }
   };
-
-  // const fetchDataFromApi = async () => {
-  //   try {
-  //     const googleBooksApiUrl = `https://www.googleapis.com/books/v1/volumes?q=intitle:${encodeURIComponent(
-  //       title
-  //     )}&maxResults=1`;
-  //     const response = await axios.get(googleBooksApiUrl);
-  //     const items = response.data.items;
-
-  //     if (items && items.length > 0) {
-  //       const bookData = items[0].volumeInfo;
-  //       const thumbnailUrl = bookData.imageLinks?.thumbnail;
-  //       const newBook = {
-  //         id: id + 1,
-  //         title,
-  //         authors: bookData.authors
-  //           ? await findOrCreateAuthors(bookData.authors)
-  //           : [],
-  //         publisher: bookData.publisher
-  //           ? await findOrCreatePublisher(bookData.publisher)
-  //           : null,
-  //         description: bookData.description,
-  //         categories: bookData.categories
-  //           ? bookData.categories.map((category) => ({ name: category }))
-  //           : [],
-  //         quantity: 0,
-  //         price: 0,
-  //         imageUrl: thumbnailUrl || "/images/blank.png",
-  //       };
-  //       setId(newBook.id);
-  //       setThumbnail(newBook.imageUrl);
-  //       setAuthors(newBook.authors);
-  //       setPublisher(newBook.publisher);
-  //       setDescription(newBook.description);
-  //       setCategories(newBook.categories);
-  //       setQuantityInStock(newBook.quantity);
-  //       setPrice(newBook.price);
-
-  //       updateDatabase(newBook);
-  //     } else {
-  //       setThumbnail("/images/blank.png");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching thumbnail:", error);
-  //     setThumbnail("/images/blank.png");
-  //   }
-  // };
-
-  // const findOrCreateAuthors = async (authorNames) => {
-  //   const authors = [];
-  //   for (const name of authorNames) {
-  //     let response = await axios.get(
-  //       `http://localhost:8080/api/v1/authors?name=${encodeURIComponent(name)}`
-  //     );
-  //     let author = response.data;
-  //     if (!author) {
-  //       response = await axios.post(
-  //         "http://localhost:8080/api/v1/authors/add-author",
-  //         {
-  //           name,
-  //         }
-  //       );
-  //       author = response.data;
-  //     }
-  //     authors.push(author);
-  //   }
-  //   return authors;
-  // };
-
-  // const findOrCreatePublisher = async (publisherName) => {
-  //   let response = await axios.get(
-  //     `http://localhost:8080/api/v1/publishers?name=${encodeURIComponent(
-  //       publisherName
-  //     )}`
-  //   );
-  //   let publisher = response.data;
-  //   if (!publisher) {
-  //     response = await axios.post(
-  //       "http://localhost:8080/api/v1/publishers/add-publisher",
-  //       {
-  //         name: publisherName,
-  //       }
-  //     );
-  //     publisher = response.data;
-  //   }
-  //   return publisher;
-  // };
-
-  // const updateDatabase = async (book) => {
-  //   try {
-  //     console.log("Updating database:", book);
-  //     await axios.post("http://localhost:8080/api/v1/books/add-book", book);
-  //   } catch (error) {
-  //     console.error("Error updating database:", error);
-  //   }
-  // };
 
   useEffect(() => {
     fetchData();
@@ -174,6 +80,7 @@ const Book = ({ title }) => {
               src={image_url}
               alt="product"
               className="img-fluid product-image"
+              onClick={() => navigate(`/product/${id}`)}
             />
           </div>
           <div className="product-name pt-3">
