@@ -10,6 +10,9 @@ const BookDetails = () => {
   const [review, setReview] = useState("");
   const [reviews, setReviews] = useState([]);
   const [rating, setRating] = useState(1);
+  const [currentPage, setCurrentPage] = useState(1); // nowy stan
+  const [reviewsPerPage] = useState(5); // nowy stan
+
   const { id } = useParams();
 
   useEffect(() => {
@@ -57,6 +60,10 @@ const BookDetails = () => {
       .catch((error) => {
         console.error(error);
       });
+  };
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
   if (!book) {
@@ -117,6 +124,12 @@ const BookDetails = () => {
     }
   }
 
+  // Obliczanie liczby stron i aktualnych recenzji do wyświetlenia
+  const firstReviewIndex = (currentPage - 1) * reviewsPerPage;
+  const lastReviewIndex = firstReviewIndex + reviewsPerPage;
+  const currentReviews = reviews.slice(firstReviewIndex, lastReviewIndex);
+  const totalPages = Math.ceil(reviews.length / reviewsPerPage);
+
   return (
     <div className="container">
       <h2>{book.title}</h2>
@@ -124,11 +137,11 @@ const BookDetails = () => {
       <img src={book.image_url} alt={book.title} className="img-fluid" />
 
       <h3>Recenzje</h3>
-      {reviews.length === 0 ? (
+      {currentReviews.length === 0 ? (
         <p>Brak recenzji.</p>
       ) : (
         <div>
-          {reviews.map((review) => (
+          {currentReviews.map((review) => (
             <div className="review" key={review.id}>
               <h4>{review.user.username}</h4>
               <StarRatings
@@ -145,6 +158,13 @@ const BookDetails = () => {
               <p>{review.description}</p>
             </div>
           ))}
+          <div className="pagination">
+            {[...Array(totalPages).keys()].map((number) => (
+              <button key={number} onClick={() => handlePageChange(number + 1)}>
+                {number + 1}
+              </button>
+            ))}
+          </div>
         </div>
       )}
       <div>
