@@ -35,6 +35,8 @@ public class SecurityConfiguration {
                 .permitAll()
                 .requestMatchers("/api/v1/categories/**")
                 .permitAll()
+                .requestMatchers("/api/v1/reviews/**")
+                .permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()

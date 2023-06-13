@@ -14,7 +14,10 @@ import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.BookRepositor
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.CategoryRepository;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.PublisherRepository;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -134,5 +137,13 @@ public class BookService {
 
     public List<Book> getBooksByTitle(String title) {
         return bookRepository.findByTitle(title);
+    }
+
+    public Book getBookById(Integer id) {
+        return bookRepository.findById(id).orElseThrow();
+    }
+
+    public Optional<Book> findById(Integer id) {
+        return bookRepository.findById(id);
     }
 }

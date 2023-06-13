@@ -1,7 +1,6 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 
 import lombok.AllArgsConstructor;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.Book;
@@ -25,7 +24,10 @@ public class BookController {
     public List<Book>getBooksByCategory(@RequestParam("category") String category){
         return bookService.getBooksByCategory(category);
     }
-
+    @GetMapping("/by-id/{id}")
+    public Book getBookById(@PathVariable Integer id) {
+        return bookService.getBookById(id);
+    }
     @GetMapping(params = "search")
     public List<Book> getBooksBySearchTerm(@RequestParam("search") String searchTerm) {
         if (searchTerm == null || searchTerm.isEmpty())

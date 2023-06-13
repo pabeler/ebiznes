@@ -20,6 +20,7 @@ import AccountDetails from "./components/AccountDetails";
 import { ToastContainer } from "react-toastify";
 import AddBook from "./components/AddBook";
 import EditBook from "./components/EditBook";
+import BookDetails from "./components/BookDetails";
 
 export const logContext = createContext();
 
@@ -101,6 +102,7 @@ function App() {
               <Route path="/add-book" element={<AddBook />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/edit-book" element={<EditBook />} />
+              <Route path="/product/:id" element={<BookDetails />} />
             </Routes>
 
             <Footer />
