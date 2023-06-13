@@ -233,7 +233,6 @@ export default function AddressDetails() {
                     </Col>
                 </Row>
             </Container>
-            <ToastContainer/>
         </>
     );
   }

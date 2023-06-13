@@ -82,7 +82,6 @@ function App() {
   return (
     <CartContext.Provider value={{ cart, setCart }}>
       <div className="App">
-        <ToastContainer />
         <BrowserRouter>
           <logContext.Provider value={{ log, setLog }}>
             <Navbar />
