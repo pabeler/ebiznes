@@ -37,8 +37,6 @@ export default function Home() {
           </div>
           <div className="carousel-inner">
             <div className="carousel-item active">
-              {/* tu będzi background przez api czy coś/ whatever */}
-              {/* <div className="home-banner home-banner-1" style={{backgoundImage:  `url(${background})`}}> */}
               <div className="home-banner home-banner-1">
                 <div className="home-banner-text">
                   <h1>Bądź na bieżąco</h1>
@@ -51,7 +49,6 @@ export default function Home() {
                   </a>
                 </div>
               </div>
-              {/* <img src="images\shopping-basket.png" className="d-block w-100" alt="..."/> */}
             </div>
             <div className="carousel-item">
               <div className="home-banner home-banner-1">
@@ -66,7 +63,6 @@ export default function Home() {
                   </a>
                 </div>
               </div>
-              {/* <img src="images\shopping-basket.png" className="d-block w-100" alt="..."/> */}
             </div>
             <div className="carousel-item">
               <div className="home-banner home-banner-1">
@@ -81,7 +77,6 @@ export default function Home() {
                   </a>
                 </div>
               </div>
-              {/* <img src="images\shopping-basket.png" className="d-block w-100" alt="..."/> */}
             </div>
           </div>
           <button
@@ -121,58 +116,62 @@ export default function Home() {
           <div className="row">
             <div className="col-sm-12">
               <div className="headline text-left info-text info-text-header bg-white pt-3 mb-5">
-                <h2 className="pb-3 position-relative d-inline-block ">
+                <h2 className="pb-3 position-relative d-inline-block">
                   Dlaczego powinieneś wybrać nas?
                 </h2>
               </div>
             </div>
           </div>
-          <div className="row ms-5 me-5">
+          <div className="row ms-5 me-5 justify-content-center">
             <div className="col-sm-12 col-md-6 col-lg-3 info-text">
               <div className="info-text">
-                <h3 className="pb-3 position-relative d-flex flex-column ps-5 pe-5">
+                <h3 className="pb-3 position-relative d-flex flex-column align-items-center">
                   <img
-                    src="images\Delivery.png"
+                    src="images/Delivery.png"
                     alt="info1"
                     className="img-fluid info-image"
+                    style={{ width: "172px", height: "172px" }}
                   />
-                  Darmowa dostawa od 199zł
+                  <span className="mt-3">Darmowa dostawa od 199zł</span>
                 </h3>
               </div>
             </div>
             <div className="col-sm-12 col-md-6 col-lg-3 info-text">
               <div className="info-text">
-                <h3 className="pb-3 position-relative d-flex flex-column ps-5 pe-5">
+                <h3 className="pb-3 position-relative d-flex flex-column align-items-center">
                   <img
-                    src="images\Delivery.png"
-                    alt="info1"
+                    src="images/Promotion.png"
+                    alt="info2"
                     className="img-fluid info-image"
+                    style={{ width: "172px", height: "172px" }}
                   />
-                  Wiele korzystnych promocji
+                  <span className="mt-3">Wiele korzystnych promocji</span>
                 </h3>
               </div>
             </div>
             <div className="col-sm-12 col-md-6 col-lg-3 info-text">
               <div className="info-text">
-                <h3 className="pb-3 position-relative d-flex flex-column ps-5 pe-5">
+                <h3 className="pb-3 position-relative d-flex flex-column align-items-center">
                   <img
-                    src="images\Delivery.png"
-                    alt="info1"
+                    src="images/Guarantee.png"
+                    alt="info3"
                     className="img-fluid info-image"
+                    style={{ width: "172px", height: "172px" }}
                   />
-                  Bezpieczne zakupy
+                  <span className="mt-3">Bezpieczne zakupy</span>
                 </h3>
               </div>
             </div>
             <div className="col-sm-12 col-md-6 col-lg-3 info-text">
               <div className="info-text">
-                <h3 className="pb-3 position-relative d-flex flex-column ps-5 pe-5">
+                <h3 className="pb-3 position-relative d-flex flex-column align-items-center">
                   <img
-                    src="images\Delivery.png"
-                    alt="info1"
+                    src="images/Choice.png"
+                    alt="info4"
                     className="img-fluid info-image"
+                    style={{ width: "172px", height: "172px" }}
                   />
-                  Szeroki wybór
+                  <span className="mt-3">Szeroki wybór</span>
                 </h3>
               </div>
             </div>

@@ -46,8 +46,8 @@ public class CheckoutController {
 
         SessionCreateParams params =
                 SessionCreateParams.builder()
-                        .setSuccessUrl("localhost:3000")
-                        .setCancelUrl("localhost:3000")
+                        .setSuccessUrl("http://localhost:3000/")
+                        .setCancelUrl("http://localhost:3000/")
                         .setMode(SessionCreateParams.Mode.PAYMENT)
                         .addAllLineItem(lineItems)
                         .build();
