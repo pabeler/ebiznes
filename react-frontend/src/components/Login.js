@@ -6,6 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import { showToastMessage } from "./ToastMessage";
 import { useNavigate } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+import "./Home.css";
 
 export default function Login() {
   const { setLog } = useContext(logContext);
@@ -104,7 +105,7 @@ export default function Login() {
 
   return (
     <>
-      <div className="container mt-5">
+      <div className="container mt-5 full-screen">
         <div className="row justify-content-center">
           <div className="col-lg-6">
             {showLoginForm && (
