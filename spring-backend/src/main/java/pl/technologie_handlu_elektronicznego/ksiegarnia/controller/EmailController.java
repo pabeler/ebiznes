@@ -1,59 +1,51 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.controller;
 
-import com.sendgrid.Method;
-import com.sendgrid.Request;
-import com.sendgrid.SendGrid;
-import com.sendgrid.helpers.mail.Mail;
-import com.sendgrid.helpers.mail.objects.Content;
-import com.sendgrid.helpers.mail.objects.Email;
-import com.sendgrid.helpers.mail.objects.Personalization;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.http.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.DTOs.EmailRequest;
 
-@RestController
-@CrossOrigin(origins = "http://localhost:3000")
+@Controller
 @RequestMapping("/api/v1/email")
 public class EmailController {
-    private final SendGrid sendGrid;
-    private final String senderEmail;
 
-    @Autowired
-    public EmailController(SendGrid sendGrid, @Value("${spring.mail.username}") String senderEmail) {
-        this.sendGrid = sendGrid;
-        this.senderEmail = senderEmail;
-    }
+    @Value("${mailgun.apiKey}")
+    private String mailgunApiKey;
+
+    @Value("${mailgun.domain}")
+    private String mailgunDomain;
 
     @PostMapping("/send-email")
-    public ResponseEntity<Void> sendEmail(@RequestBody EmailRequest emailRequest) {
+    @ResponseBody
+    public ResponseEntity<String> sendEmail(@RequestBody EmailRequest emailRequest) {
         try {
-            Mail mail = new Mail();
+            String url = String.format("https://api.mailgun.net/v3/%s/messages", mailgunDomain);
 
-            Email fromEmail = new Email(senderEmail);
-            mail.setFrom(fromEmail);
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+            headers.setBasicAuth("api", mailgunApiKey);
 
-            Email toEmail = new Email(emailRequest.getEmail());
-            mail.setSubject("Email od: " + emailRequest.getName());
-            mail.addContent(new Content("text/plain", emailRequest.getMessage()));
+            MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
+            body.add("from", "Excited User <mailgun@YOUR_DOMAIN_NAME>");
+            body.add("to", emailRequest.getEmail());
+            body.add("subject", emailRequest.getName());
+            body.add("text", emailRequest.getMessage() + "\n" + emailRequest.getPhone());
 
-            Personalization personalization = new Personalization();
-            personalization.addTo(toEmail);
+            HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
 
-            mail.addPersonalization(personalization);
+            RestTemplate restTemplate = new RestTemplate();
+            ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.POST, requestEntity, String.class);
 
-            Request request = new Request();
-            request.setMethod(Method.POST);
-            request.setEndpoint("mail/send");
-            request.setBody(mail.build());
-
-            sendGrid.api(request);
-
-            return ResponseEntity.ok().build();
+            return response;
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred while sending email");
         }
     }
 }
