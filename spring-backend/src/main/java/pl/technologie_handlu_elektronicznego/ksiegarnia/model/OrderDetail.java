@@ -12,8 +12,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class OrderDetail {
 
-    @EmbeddedId
-    private OrderDetailsId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "orderid")

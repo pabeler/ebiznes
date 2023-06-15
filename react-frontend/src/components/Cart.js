@@ -1,5 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import CartContext from "../CartContext";
+import { loadStripe } from "@stripe/stripe-js";
+import "./CheckoutButton";
+
+const stripePromise = loadStripe(
+  "pk_test_51NJ02BA92ElYRt2EPKz5OYHMhLGJSk6vS6poc01HSMFfv4LC8s8xx9gKDgdDqoMdeQ2JkXdZq0Jpylj2Ud8LMZb9008v9HWuYm"
+);
 
 export default function Cart() {
   const { cart, setCart } = useContext(CartContext);
@@ -32,9 +38,72 @@ export default function Cart() {
     setCart(cart.filter((item) => item.id !== id));
   };
 
-  const handleCheckout = () => {
-    // Here you should handle the checkout process
-    console.log("Proceeding to checkout...");
+  const handleCheckout = async () => {
+    const stripe = await stripePromise;
+
+    const order = {
+      user: { id: sessionStorage.getItem("id") },
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      destination_address: "ADRES_DO_DOSTAWY",
+      status: "CREATED",
+      items: cart.map((item) => ({
+        book: {
+          id: item.id,
+          price: item.price * 100,
+        },
+        quantity: item.quantity,
+      })),
+    };
+
+    // Send the request to create a new order
+    const orderResponse = await fetch(
+      "http://localhost:8080/api/v1/order/add",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(order),
+      }
+    );
+
+    if (!orderResponse.ok) {
+      console.error("Failed to create order:", await orderResponse.text());
+      return;
+    }
+
+    const paymentRequest = {
+      totalPrice: totalSum,
+      items: cart.map((item) => ({
+        book: {
+          id: item.id,
+          price: item.price * 100,
+        },
+        quantity: item.quantity,
+      })),
+    };
+
+    const sessionResponse = await fetch(
+      "http://localhost:8080/api/v1/checkout/create-checkout-session",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(paymentRequest),
+      }
+    );
+
+    const session = await sessionResponse.json();
+    console.log(sessionResponse.json());
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+
+    if (result.error) {
+      console.error(result.error.message);
+    }
   };
 
   return (
@@ -46,7 +115,6 @@ export default function Cart() {
             <img src={item.image_url} alt={item.title} />
             <div className="item-details">
               <h3>{item.title}</h3>
-
               <p>{item.price} zł</p>
               <p>Ilość: {item.quantity}</p>
               <button onClick={() => incrementQuantity(item.id)}>+</button>
