@@ -21,7 +21,8 @@ import { ToastContainer } from "react-toastify";
 import AddBook from "./components/AddBook";
 import EditBook from "./components/EditBook";
 import BookDetails from "./components/BookDetails";
-
+import Regulations from "./components/Regulations";
+import Privacy from "./components/Privacy";
 export const logContext = createContext();
 
 function App() {
@@ -102,6 +103,8 @@ function App() {
               <Route path="/cart" element={<Cart />} />
               <Route path="/edit-book" element={<EditBook />} />
               <Route path="/product/:id" element={<BookDetails />} />
+              <Route path="/regulations" element={<Regulations />} />
+              <Route path="/privacy" element={<Privacy />} />
             </Routes>
 
             <Footer />
