@@ -86,7 +86,7 @@ function App() {
         <BrowserRouter>
           <logContext.Provider value={{ log, setLog }}>
             <Navbar />
-
+            <div className="spacer">
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<Login />} />
@@ -106,7 +106,7 @@ function App() {
               <Route path="/regulations" element={<Regulations />} />
               <Route path="/privacy" element={<Privacy />} />
             </Routes>
-
+            </div>
             <Footer />
           </logContext.Provider>
         </BrowserRouter>
