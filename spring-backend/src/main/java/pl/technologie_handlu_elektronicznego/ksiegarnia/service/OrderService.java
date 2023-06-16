@@ -103,4 +103,13 @@ public class OrderService {
         return book;
     }
 
+    public void updateOrderAddress(String orderId, String shippingAddress) {
+        Optional<Order> order = orderRepository.findById(Integer.parseInt(orderId));
+        if (order.isPresent()) {
+            order.get().setDestination_address(shippingAddress);
+            orderRepository.save(order.get());
+        }else {
+            throw new RuntimeException("Order not found with id: " + orderId);
+        }
+    }
 }

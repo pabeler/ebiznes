@@ -82,7 +82,7 @@ function App() {
 
   return (
     <CartContext.Provider value={{ cart, setCart }}>
-      <div className="App">
+      <div className="App d-flex flex-column min-vh-100">
         <BrowserRouter>
           <logContext.Provider value={{ log, setLog }}>
             <Navbar />
