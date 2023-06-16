@@ -87,6 +87,30 @@ export default function Cart() {
       return;
     }
 
+    for (const item of cart) {
+      const bookResponse = await fetch(
+        `http://localhost:8080/api/v1/books/by-id/${item.id}`
+      );
+      const book = await bookResponse.json();
+      console.log(book);
+      book.quantity -= item.quantity;
+
+      const updateResponse = await fetch(
+        `http://localhost:8080/api/v1/books/change-quantity/${item.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(book.quantity),
+        }
+      );
+
+      if (!updateResponse.ok) {
+        console.error("Failed to update book:", await updateResponse.text());
+      }
+    }
+
     const paymentRequest = {
       totalPrice: totalSum,
       items: cart.map((item) => ({
@@ -118,30 +142,6 @@ export default function Cart() {
 
     if (result.error) {
       console.error(result.error.message);
-    } else {
-      for (const item of cart) {
-        const bookResponse = await fetch(
-          `http://localhost:8080/api/v1/books/by-id/${item.id}`
-        );
-        const book = await bookResponse.json();
-
-        book.quantity -= item.quantity;
-
-        const updateResponse = await fetch(
-          `http://localhost:8080/api/v1/books/${item.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(book),
-          }
-        );
-
-        if (!updateResponse.ok) {
-          console.error("Failed to update book:", await updateResponse.text());
-        }
-      }
     }
   };
 

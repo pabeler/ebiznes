@@ -48,6 +48,10 @@ public class BookController {
     public Book updateBook(@PathVariable Integer id, @RequestBody Book book) {
         return bookService.updateBook(id, book);
     }
+    @PutMapping("/change-quantity/{id}")
+    public Book changeQuantity(@PathVariable Integer id, @RequestBody Integer quantity) {
+        return bookService.changeQuantity(id, quantity);
+    }
     @PostMapping("/add-book")
     public ResponseEntity<String> addBook(@RequestBody Book book) {
         return bookService.addBook(book);

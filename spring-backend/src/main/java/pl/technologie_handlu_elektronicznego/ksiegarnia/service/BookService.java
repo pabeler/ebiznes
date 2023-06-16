@@ -146,4 +146,10 @@ public class BookService {
     public Optional<Book> findById(Integer id) {
         return bookRepository.findById(id);
     }
+
+    public Book changeQuantity(Integer id, Integer quantity) {
+        Book book = bookRepository.findById(id).orElseThrow();
+        book.setQuantity(quantity);
+        return bookRepository.save(book);
+    }
 }
