@@ -31,7 +31,7 @@ export default function Shop() {
     const fetchCategories = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:8080/api/v1/category/get-all-categories"
+          "http://localhost:8080/api/v1/categories/all"
         );
         setCategories(response.data);
       } catch (error) {
@@ -100,17 +100,16 @@ export default function Shop() {
   const indexOfFirstBook = indexOfLastBook - booksPerPage;
 
   const filteredBooks = booksData.filter((book) => {
+    const isPriceInRange = book.price >= minPrice && book.price <= maxPrice;
     if (selectedCategories.length === 0) {
-      return true; // No categories selected, show all books
+      return true && isPriceInRange; // No categories selected, show all books where price is in range
     } else {
       // Only show books if any of their categories is selected
       console.log(minPrice, maxPrice);
       return (
         book.categories.some((category) =>
           selectedCategories.includes(category.name)
-        ) &&
-        book.price >= minPrice &&
-        book.price <= maxPrice
+        ) && isPriceInRange
       );
     }
   });

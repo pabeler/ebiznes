@@ -34,8 +34,8 @@ public class EmailController {
 
             MultiValueMap<String, String> body = new LinkedMultiValueMap<>();
             body.add("from", "Excited User <mailgun@YOUR_DOMAIN_NAME>");
-            body.add("to", emailRequest.getEmail());
-            body.add("subject", emailRequest.getName());
+            body.add("to", "ebiznes@pabeler.tech");
+            body.add("subject", "Użytkownik: " + emailRequest.getEmail() + "\nTemat: " + emailRequest.getName());
             body.add("text", emailRequest.getMessage() + "\n" + emailRequest.getPhone());
 
             HttpEntity<MultiValueMap<String, String>> requestEntity = new HttpEntity<>(body, headers);
