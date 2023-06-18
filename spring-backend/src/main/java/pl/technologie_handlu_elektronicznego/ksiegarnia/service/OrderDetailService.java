@@ -4,6 +4,9 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.OrderDetail;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.repository.OrderDetailRepository;
+
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class OrderDetailService {
@@ -11,5 +14,9 @@ public class OrderDetailService {
 
     public OrderDetail save(OrderDetail orderDetail) {
         return orderDetailsRepository.save(orderDetail);
+    }
+
+    public List<OrderDetail> findByOrderId(Integer id) {
+        return orderDetailsRepository.findByOrderId(id);
     }
 }

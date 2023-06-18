@@ -29,4 +29,9 @@ public class OrderController {
     public List<Order> getAllUserOrders(@PathVariable Integer id) {
         return orderService.findAllUserOrders(id);
     }
+
+    @GetMapping("/get-by-user/{id}")
+    public List<Order> getAllUserOrdersByUserId(@PathVariable Integer id) {
+        return orderService.findAllUserOrdersByUserId(id);
+    }
 }

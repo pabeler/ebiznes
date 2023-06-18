@@ -112,4 +112,8 @@ public class OrderService {
             throw new RuntimeException("Order not found with id: " + orderId);
         }
     }
+
+    public List<Order> findAllUserOrdersByUserId(Integer id) {
+        return orderRepository.findByUserId(id);
+    }
 }

@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Footer from "./components/Footer";
 import AddressDetails from "./components/AddressDetails";
 import Shop from "./components/Shop";
+import Orders from "./components/Orders";
 import AboutUs from "./components/AboutUs";
 import Contact from "./components/Contact";
 import Categories from "./components/Categories";
@@ -87,25 +88,26 @@ function App() {
           <logContext.Provider value={{ log, setLog }}>
             <Navbar />
             <div className="spacer">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/addressDetails" element={<AddressDetails />} />
-              <Route path="/changePassword" element={<ChangeCredentials />} />
-              <Route path="/accountDetails" element={<AccountDetails />} />
-              <Route path="/shop" element={<Shop />} />
-              <Route path="/aboutus" element={<AboutUs />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/blogs" element={<Blogs />} />
-              <Route path="/categories" element={<Categories />} />
-              <Route path="/services" element={<Services />} />
-              <Route path="/add-book" element={<AddBook />} />
-              <Route path="/cart" element={<Cart />} />
-              <Route path="/edit-book" element={<EditBook />} />
-              <Route path="/product/:id" element={<BookDetails />} />
-              <Route path="/regulations" element={<Regulations />} />
-              <Route path="/privacy" element={<Privacy />} />
-            </Routes>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/addressDetails" element={<AddressDetails />} />
+                <Route path="/changePassword" element={<ChangeCredentials />} />
+                <Route path="/accountDetails" element={<AccountDetails />} />
+                <Route path="/shop" element={<Shop />} />
+                <Route path="/aboutus" element={<AboutUs />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/blogs" element={<Blogs />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/services" element={<Services />} />
+                <Route path="/add-book" element={<AddBook />} />
+                <Route path="/cart" element={<Cart />} />
+                <Route path="/edit-book" element={<EditBook />} />
+                <Route path="/product/:id" element={<BookDetails />} />
+                <Route path="/regulations" element={<Regulations />} />
+                <Route path="/privacy" element={<Privacy />} />
+                <Route path="/orders" element={<Orders />} />
+              </Routes>
             </div>
             <Footer />
           </logContext.Provider>

@@ -1,9 +1,6 @@
 package pl.technologie_handlu_elektronicznego.ksiegarnia.DTOs;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -12,6 +9,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class OrderDTO {
     private UserDTO user;
     private LocalDateTime created_at;

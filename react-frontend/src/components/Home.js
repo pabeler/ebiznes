@@ -111,7 +111,7 @@ export default function Home() {
       <Bestsellers />
 
       {/* ----------------------------- DLACZEGO MY / INFO ----------------------------- */}
-      <div id="info" className="info">
+      <div id="info" className="info pb-5">
         <div className="container-fluid">
           <div className="row">
             <div className="col-sm-12">

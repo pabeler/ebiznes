@@ -59,7 +59,7 @@ export default function Navbar() {
                     Logowanie
                   </Link>
                 ) : (
-                  <div>
+                  <div className="nav-item nav-item_text mt-auto mb-auto me-2">
                     <MyProfile />
                   </div>
                 )}

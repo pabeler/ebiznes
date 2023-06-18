@@ -80,6 +80,7 @@ const Book = ({ title }) => {
               src={image_url}
               alt="product"
               className="img-fluid product-image"
+              style={{ width: "127px", height: "193px" }}
               onClick={() => navigate(`/product/${id}`)}
             />
           </div>
