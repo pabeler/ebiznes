@@ -29,7 +29,7 @@ public class Book {
     @Column(name = "quantity")
     private Integer quantity;
 
-    @Column(name = "description", length = 1024)
+    @Column(name = "description", length = 4096)
     private String description;
 
     @Column(name = "image_url")

@@ -32,16 +32,13 @@ const Bestsellers = () => {
         </div>
       </div>
       <div className="row">
-        {/* Example usage of Book component */}
         {/* Tutaj można zrobić potem sortowanie po najczęściej kupowanych książkach */}
         <div className="row">
           {books.slice(0, 4).map((book) => (
             <Book title={book.title} />
           ))}
         </div>
-        {/* Repeat the above Book component with different props for other bestseller books */}
       </div>
-      {/* Rest of the code */}
     </div>
   );
 };

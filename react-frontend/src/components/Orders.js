@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Card, Container, Row, Col } from "react-bootstrap";
 
 function Order() {
   const [orders, setOrders] = useState([]);
@@ -40,42 +40,32 @@ function Order() {
   }, []);
 
   return (
-    <div className="Order">
-      <Typography variant="h2">Orders</Typography>
+    <Container className="Order">
+      <h2>Zamówienia</h2>
       {orders.length > 0 ? (
         orders.map((order, index) => (
-          <Card variant="outlined" style={{ marginTop: "1rem" }} key={index}>
-            <CardContent>
-              <Typography variant="h6">Order ID: {order.id}</Typography>
-              <Typography variant="body1">
-                Created at: {order.created_at}
-              </Typography>
-              <Typography variant="body1">
-                Updated at: {order.updated_at}
-              </Typography>
-              <Typography variant="body1">
-                Destination Address: {order.destination_address}
-              </Typography>
-              <Typography variant="body1">Status: {order.status}</Typography>
-              <Typography variant="h5">Order Details:</Typography>
+          <Card key={index} className="my-3">
+            <Card.Body>
+              <Card.Title>Zamówienie ID: {order.id}</Card.Title>
+              <Card.Text>Utworzone: {order.created_at}</Card.Text>
+              <Card.Text>Aktualizowane: {order.updated_at}</Card.Text>
+              <Card.Text>Adres dostawy: {order.destination_address}</Card.Text>
+              <Card.Text>Status: {order.status}</Card.Text>
+              <h5>Szczegóły zamówienia:</h5>
               {order.details.map((detail, i) => (
                 <div key={i}>
-                  <Typography variant="h6">Detail {i + 1}</Typography>
-                  <Typography variant="body1">
-                    Book Title: {detail.book.title}
-                  </Typography>
-                  <Typography variant="body1">
-                    Quantity: {detail.quantity}
-                  </Typography>
+                  <h6>Szczegół {i + 1}</h6>
+                  <p>Tytuł książki: {detail.book.title}</p>
+                  <p>Ilość: {detail.quantity}</p>
                 </div>
               ))}
-            </CardContent>
+            </Card.Body>
           </Card>
         ))
       ) : (
-        <Typography variant="body1">No orders found</Typography>
+        <p>Nie znaleziono zamówień</p>
       )}
-    </div>
+    </Container>
   );
 }
 
