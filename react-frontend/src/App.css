@@ -2,6 +2,12 @@
   text-align: center;
 }
 
+.spacer {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 36vh;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
