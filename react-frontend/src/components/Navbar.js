@@ -7,9 +7,35 @@ import { logContext } from "../App";
 
 export default function Navbar() {
   const { log } = useContext(logContext);
+
+  const renderShopAndCartLinks = () => {
+    if (log !== "unlogged") {
+      return (
+        <li className="nav-item nav-item_text mt-auto mb-auto me-2">
+          <Link to="/shop" className="nav-link">
+            Sklep
+          </Link>
+        </li>
+      );
+    }
+    return null;
+  };
+
+  const renderCartLink = () => {
+    if (log !== "unlogged") {
+      return (
+        <li className="nav-item nav-item_text mt-auto mb-auto me-2">
+          <Link to="/cart" className="nav-link">
+            <BasketIcon />
+          </Link>
+        </li>
+      );
+    }
+    return null;
+  };
+
   return (
-    //Narazie jest xl, potem można zmienić że składa się kiedy jest mniejszy ekran
-    <nav className="navbar navbar-expand-xl ">
+    <nav className="navbar navbar-expand-xl">
       {log !== "ADMIN" ? (
         <div className="container-fluid">
           <Link to="/" className="navbar-brand">
@@ -33,16 +59,12 @@ export default function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarXl">
             <ul className="navbar-nav ms-auto text-align-center">
-              <li className="nav-item nav-item_text mt-auto mb-auto me-2 ">
+              <li className="nav-item nav-item_text mt-auto mb-auto me-2">
                 <Link to="/" className="nav-link nav--menu_item">
                   Strona Główna
                 </Link>
               </li>
-              <li className="nav-item nav-item_text mt-auto mb-auto me-2 ">
-                <Link to="/shop" className="nav-link">
-                  Sklep
-                </Link>
-              </li>
+              {renderShopAndCartLinks()}
               <li className="nav-item nav-item_text mt-auto mb-auto me-2">
                 <Link to="/aboutus" className="nav-link">
                   O nas
@@ -64,11 +86,7 @@ export default function Navbar() {
                   </div>
                 )}
               </li>
-              <li className="nav-item nav-item_text mt-auto mb-auto me-2">
-                <Link to="/cart" className="nav-link">
-                  <BasketIcon />
-                </Link>
-              </li>
+              {renderCartLink()}
             </ul>
           </div>
         </div>
@@ -95,7 +113,7 @@ export default function Navbar() {
           </button>
           <div className="collapse navbar-collapse" id="navbarXl">
             <ul className="navbar-nav ms-auto text-align-center">
-              <li className="nav-item nav-item_text mt-auto mb-auto me-2 ">
+              <li className="nav-item nav-item_text mt-auto mb-auto me-2">
                 <Link
                   to={"/"}
                   className="nav-link nav--menu_item"
@@ -104,12 +122,12 @@ export default function Navbar() {
                   Strona Główna
                 </Link>
               </li>
-              <li className="nav-item nav-item_text mt-auto mb-auto me-2 ">
+              <li className="nav-item nav-item_text mt-auto mb-auto me-2">
                 <Link to="/add-book" className="nav-link">
                   Dodaj książkę
                 </Link>
               </li>
-              <li className="nav-item nav-item_text mt-auto mb-auto me-2 ">
+              <li className="nav-item nav-item_text mt-auto mb-auto me-2">
                 <Link to="/edit-book" className="nav-link">
                   Edytuj książkę
                 </Link>
