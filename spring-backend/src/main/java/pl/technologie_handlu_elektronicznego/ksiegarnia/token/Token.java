@@ -7,6 +7,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import pl.technologie_handlu_elektronicznego.ksiegarnia.model.User;
 
+import java.time.LocalDateTime;
+import java.util.Date;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -21,12 +24,10 @@ public class Token {
     @Column(unique = true)
     public String token;
 
-    @Enumerated(EnumType.STRING)
-    public TokenType tokenType = TokenType.BEARER;
-
     public boolean revoked;
 
-    public boolean expired;
+    @Column
+    public Date expirationDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")

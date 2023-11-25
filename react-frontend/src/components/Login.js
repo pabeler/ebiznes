@@ -84,12 +84,6 @@ export default function Login() {
     }
   };
 
-  /*const goToResetPassword = (event) => {
-    event.preventDefault();
-    setShowLoginForm(false);
-    setShowForgotPassword(true);
-  };*/
-
   const goToRegistration = (event) => {
     event.preventDefault();
     setShowLoginForm(false);

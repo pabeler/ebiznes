@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthenticationResponse {
     private String token;
-    private Integer id;
-    private String refreshToken; // dodane pole
+    private String refreshToken;
 }
