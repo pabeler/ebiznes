@@ -27,6 +27,9 @@ public class PaymentController {
         PaymentIntentCreateParams params = PaymentIntentCreateParams.builder()
                 .setAmount(paymentRequest.getAmount()) // Kwota w najmniejszej jednostce waluty, np. centach dla USD
                 .setCurrency("pln") // Ustaw walutę
+                .addPaymentMethodType("card") // Ustaw metodę płatności
+                .addPaymentMethodType("p24") // Ustaw metodę płatności
+                .addPaymentMethodType("blik") // Ustaw metodę płatności
                 .build();
 
         try {
