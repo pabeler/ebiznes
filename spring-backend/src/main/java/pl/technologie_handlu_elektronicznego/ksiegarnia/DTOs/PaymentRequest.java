@@ -13,6 +13,5 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PaymentRequest {
-    private Float totalPrice;
-    private List<OrderDetail> items;
+    private Long amount;
 }

@@ -44,6 +44,8 @@ public class SecurityConfiguration {
 //                .permitAll()
 //                .requestMatchers("/api/v1/email/**")
 //                .permitAll()
+                .requestMatchers("/api/v1/payments/**")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement()
